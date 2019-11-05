@@ -7,6 +7,7 @@ package game_project;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
  * @author aon_c
@@ -18,10 +19,12 @@ public class Sprites {
     private boolean visible, dying;
     private ImageIcon img;
     private int position[] = {0, 0}; //[X, Y]
+    private JLabel j1;
 
     public Sprites(ImageIcon img, int[] position) {
         this.img = img;
         this.position = position;
+        j1 = new JLabel(img, position[0]);
     }
 
     public boolean isVisible() {

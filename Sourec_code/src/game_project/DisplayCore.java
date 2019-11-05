@@ -5,12 +5,14 @@
  */
 package game_project;
 
+import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import sun.font.GraphicComponent;
 
 /**
  * @author aon_c
@@ -47,6 +49,6 @@ public class DisplayCore extends JFrame {
     }
 
     public void addSprite(Sprites spr) {
-        p1.add(new JLabel(spr.getImg(), spr.getPosition()[0]));
+       p1.add(new JLabel(spr.getImg(), spr.getPosition()[0]));
     }
 }
