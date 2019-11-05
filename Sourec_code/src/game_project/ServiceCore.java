@@ -7,10 +7,11 @@ package game_project;
 
 /**
  * @author aon_c
- * 
- * This class is Service class.
- * Use for handle process.
+ *
+ * This class is Service class. Use for handle process, external access.
  */
 public class ServiceCore {
-    
+
+    public void init() {
+    }
 }

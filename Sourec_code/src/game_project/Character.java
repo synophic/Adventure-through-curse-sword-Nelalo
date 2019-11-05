@@ -5,14 +5,45 @@
  */
 package game_project;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author aon_c
  */
-public class Character {
-    private int health;
-    private int atk;
-    private float speed;
-    private float position[]; //[X, Y]
+public class Character extends Sprites {
+
+    private int health, atk, speed;
+
+    public Character(ImageIcon img, int[] position) {
+        super(img, position);
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
     
+    
+
 }

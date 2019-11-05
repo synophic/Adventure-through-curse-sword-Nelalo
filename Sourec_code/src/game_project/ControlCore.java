@@ -29,5 +29,11 @@ public class ControlCore {
     }
     
     
+    public void  init(){
+    data.init();
+    service.init();
+    display.init();
     
+    display.addSprite(data.getCharr("knigth_idle_1"));
+    }
 }
