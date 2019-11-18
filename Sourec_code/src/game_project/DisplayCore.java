@@ -5,14 +5,11 @@
  */
 package game_project;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import sun.font.GraphicComponent;
 
 /**
  * @author aon_c
@@ -25,6 +22,7 @@ public class DisplayCore extends JFrame {
     private final int displayHeight;
     private final String title;
     private JPanel p1;
+    private final Map<String, Sprites> spr = new HashMap<>();
 
     public DisplayCore(int displayWidth, int displayHeight, String title) {
         this.displayWidth = displayWidth;
@@ -41,6 +39,7 @@ public class DisplayCore extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         p1 = new JPanel();
+        p1.setLayout(null);
         add(p1);
     }
 
@@ -48,7 +47,19 @@ public class DisplayCore extends JFrame {
         dispose();
     }
 
-    public void addSprite(Sprites spr) {
-       p1.add(new JLabel(spr.getImg(), spr.getPosition()[0]));
+    public void addSprite(String name, DataCore data) {
+        spr.put(name, data.getCharr(name));
+        refreshCharr(name, data);
     }
+
+    //Rewrite character
+    public void refreshCharr(String name, DataCore data) {
+        spr.put(name, data.getCharr(name));
+        p1.add(spr.get(name));
+        spr.get(name).setBounds(spr.get(name).getPosition().width,
+                spr.get(name).getPosition().height,
+                spr.get(name).getPreferredSize().width,
+                spr.get(name).getPreferredSize().height);
+    }
+
 }

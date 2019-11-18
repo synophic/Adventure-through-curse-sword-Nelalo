@@ -5,6 +5,7 @@
  */
 package game_project;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
@@ -12,16 +13,16 @@ import javax.swing.ImageIcon;
  *
  * @author aon_c
  */
-public class Character extends Sprites {
+public class Charactor extends Sprites {
 
     private int health, atk, speed;
 
-    public Character(ImageIcon img, int[] position) {
+    public Charactor(ImageIcon img, Dimension position) {
         super(img, position);
     }
 
     public int getHealth() {
-        return health;
+    return health;
     }
 
     public void setHealth(int health) {

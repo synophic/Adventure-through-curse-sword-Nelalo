@@ -5,6 +5,7 @@
  */
 package game_project;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,25 +15,16 @@ import javax.swing.JLabel;
  *
  * Interface for movable sprite. Ex. Character, Puzzle, other physic thing.
  */
-public class Sprites {
+public class Sprites extends JLabel {
 
-    private boolean visible, dying;
-    private ImageIcon img;
-    private int position[] = {0, 0}; //[X, Y]
-    private JLabel j1;
+    private boolean dying;
+    //private ImageIcon img;
+        private Dimension position; //[X, Y]
 
-    public Sprites(ImageIcon img, int[] position) {
-        this.img = img;
+    public Sprites(ImageIcon img, Dimension position) {
+        super(img);
+        //this.img = img;
         this.position = position;
-        j1 = new JLabel(img, position[0]);
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 
     public boolean isDying() {
@@ -43,19 +35,11 @@ public class Sprites {
         this.dying = dying;
     }
 
-    public ImageIcon getImg() {
-        return img;
-    }
-
-    public void setImg(ImageIcon img) {
-        this.img = img;
-    }
-
-    public int[] getPosition() {
+    public Dimension getPosition() {
         return position;
     }
 
-    public void setPosition(int[] position) {
+    public void setPosition(Dimension position) {
         this.position = position;
     }
 

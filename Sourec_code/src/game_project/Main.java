@@ -19,6 +19,7 @@ public class Main {
         DisplayCore disp1 = new DisplayCore(1280, 720, "RPG!! RPG!!"); // V
         ControlCore ctr1 = new ControlCore(); // C
         ServiceCore ser1 = new ServiceCore(); // S
+        Thread gameThread;
  
         //Fullfill control core
         ctr1.setData(d1);
@@ -26,6 +27,9 @@ public class Main {
         ctr1.setService(ser1);
         
         ctr1.init();
+        
+        gameThread = new Thread(ctr1);
+        gameThread.start();
     }
     
 }
