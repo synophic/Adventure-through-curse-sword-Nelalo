@@ -49,9 +49,6 @@ public class DisplayCore extends JFrame {
     //Rewrite character
     public void refreshCharr(String name, DataCore data) {
 
-       // spr.put(name, data.getCharr(name));
-        //spr.get(name).setBounds(spr.get(name).getBounds());
-
         p1.add(data.getCharr(name));
         data.getCharr(name).setBounds(data.getCharr(name).getPosition().width,
                 data.getCharr(name).getPosition().height,
@@ -59,5 +56,14 @@ public class DisplayCore extends JFrame {
                 data.getCharr(name).getPreferredSize().height);
 
     }
+    
+    public void refreshBg(String name, DataCore data) {
 
+        p1.add(data.getBg(name));
+        data.getBg(name).setBounds(data.getBg(name).getPosition().width,
+                data.getBg(name).getPosition().height,
+                data.getBg(name).getPreferredSize().width,
+                data.getBg(name).getPreferredSize().height);
+
+    }
 }

@@ -13,6 +13,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  * @author aon_c
@@ -46,7 +48,6 @@ public class ControlCore implements Runnable {
 
         //service.saveChar(data.getAllChar());
         data.replaceAllChar(service.loadChar());
-
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -69,7 +70,7 @@ public class ControlCore implements Runnable {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
                 if (JOptionPane.showConfirmDialog(display,
-                        "Sure?", "EXIT",
+                        "Save?", "EXIT",
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     service.saveChar(data.getAllChar());
                     System.exit(0);
@@ -96,18 +97,29 @@ public class ControlCore implements Runnable {
     public void run() {
         while (true) {
             try {
-                int dy = ((data.is_pressed(KeyEvent.VK_S) || data.is_pressed(KeyEvent.VK_DOWN)) ? 1 : 0)
-                        - ((data.is_pressed(KeyEvent.VK_W) || data.is_pressed(KeyEvent.VK_UP)) ? 1 : 0);
+                /*int dy = ((data.is_pressed(KeyEvent.VK_S) || data.is_pressed(KeyEvent.VK_DOWN)) ? 1 : 0)
+                        - ((data.is_pressed(KeyEvent.VK_W) || data.is_pressed(KeyEvent.VK_UP)) ? 1 : 0);*/
                 int dx = ((data.is_pressed(KeyEvent.VK_D) || data.is_pressed(KeyEvent.VK_RIGHT)) ? 1 : 0)
                         - ((data.is_pressed(KeyEvent.VK_A) || data.is_pressed(KeyEvent.VK_LEFT)) ? 1 : 0);
-                Dimension dm = new Dimension(dx, dy);
+                Dimension dm = new Dimension(dx, 0);
                 data.moveCharrPos("knigth", dm);
 
-                display.repaint();
-                display.refreshCharr("knigth", data);
+                //Runs inside of the Swing UI thread. Fix flicking image
+                invokeLater(new Runnable() {
+                    public void run() {
+                        display.refreshBg("layer3", data);
+
+                        display.refreshCharr("knigth", data);
+
+                        display.refreshBg("layer2", data);
+                        display.refreshBg("layer1", data);
+                    }
+                });
+
+                //display.repaint();
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
-                Thread.sleep(18); // refresh every 17ms --> ~60fps
+                Thread.sleep(16); // refresh every 17ms --> ~60fps
             } catch (InterruptedException ex) {
                 //System.out.println(ex.toString());
             }

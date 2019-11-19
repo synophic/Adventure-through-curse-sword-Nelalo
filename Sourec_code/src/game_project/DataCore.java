@@ -18,10 +18,14 @@ import javax.swing.ImageIcon;
 public class DataCore {
 
     private Map<String, Charactor> charr = new HashMap<>();
+    private Map<String, Charactor> bg = new HashMap<>();
     private Map<Integer, Boolean> keydock = new HashMap<>();
 
     public void init() {
         this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(0, 0)));
+        this.addBg("layer1", new Charactor(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
+        this.addBg("layer2", new Charactor(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
+        this.addBg("layer3", new Charactor(new ImageIcon("src/resource/BG/level1/layer3.png"), new Dimension(0, 0)));
     }
 
     public void addCharr(String name, Charactor charr) {
@@ -32,6 +36,14 @@ public class DataCore {
         return charr.get(name);
     }
 
+    public void addBg(String name, Charactor spr) {
+        this.bg.put(name, spr);
+    }
+
+    public Charactor getBg(String name) {
+        return bg.get(name);
+    }
+
     public void setCharrPos(String name, Dimension dm) {
         Charactor charr_temp = charr.get(name);
         charr_temp.setPosition(dm);
@@ -39,11 +51,12 @@ public class DataCore {
     }
 
     public void moveCharrPos(String name, Dimension dm) {
-        Charactor charr_temp = charr.get(name);
-        Dimension dm_temp = new Dimension(charr_temp.getPosition().width + (dm.width * charr_temp.getSpeed()),
-                charr_temp.getPosition().height + (dm.height * charr_temp.getSpeed()));
-        charr_temp.setPosition(dm_temp);
-        charr.put(name, charr_temp);
+        // Charactor charr_temp = charr.get(name);
+        Dimension dm_temp = new Dimension(charr.get(name).getPosition().width + (dm.width * charr.get(name).getSpeed()),
+                charr.get(name).getPosition().height + (dm.height * charr.get(name).getSpeed()));
+        //charr_temp.setPosition(dm_temp);
+        //charr.put(name, charr_temp);
+        charr.get(name).setPosition(dm_temp);
     }
 
     public boolean is_pressed(int key) {
@@ -61,8 +74,8 @@ public class DataCore {
     public Map<String, Charactor> getAllChar() {
         return charr;
     }
-    
-    public void replaceAllChar(Map<String, Charactor> charr){
+
+    public void replaceAllChar(Map<String, Charactor> charr) {
         this.charr = charr;
     }
 }
