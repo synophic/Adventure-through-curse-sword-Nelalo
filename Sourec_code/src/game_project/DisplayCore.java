@@ -56,7 +56,7 @@ public class DisplayCore extends JFrame {
     public void refreshCharr(String name, DataCore data) {
 
         spr.put(name, data.getCharr(name));
-        //spr.get(name).setBounds(spr.get(name).getBounds());
+        spr.get(name).setBounds(spr.get(name).getBounds());
 
         p1.add(spr.get(name));
         spr.get(name).setBounds(spr.get(name).getPosition().width,
