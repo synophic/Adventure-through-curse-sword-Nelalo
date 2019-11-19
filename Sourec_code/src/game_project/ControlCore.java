@@ -80,8 +80,6 @@ public class ControlCore implements Runnable {
         display.addKeyListener(kl);
         display.addWindowListener(w1);
 
-        display.addSprite("knigth", data);
-
         data.getCharr("knigth").setSpeed(20);
     }
 

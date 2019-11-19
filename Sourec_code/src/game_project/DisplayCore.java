@@ -22,7 +22,6 @@ public class DisplayCore extends JFrame {
     private final int displayHeight;
     private final String title;
     private JPanel p1;
-    private final Map<String, Sprites> spr = new HashMap<>();
 
     public DisplayCore(int displayWidth, int displayHeight, String title) {
         this.displayWidth = displayWidth;
@@ -47,22 +46,17 @@ public class DisplayCore extends JFrame {
         dispose();
     }
 
-    public void addSprite(String name, DataCore data) {
-        spr.put(name, data.getCharr(name));
-        refreshCharr(name, data);
-    }
-
     //Rewrite character
     public void refreshCharr(String name, DataCore data) {
 
-        spr.put(name, data.getCharr(name));
-        spr.get(name).setBounds(spr.get(name).getBounds());
+       // spr.put(name, data.getCharr(name));
+        //spr.get(name).setBounds(spr.get(name).getBounds());
 
-        p1.add(spr.get(name));
-        spr.get(name).setBounds(spr.get(name).getPosition().width,
-                spr.get(name).getPosition().height,
-                spr.get(name).getPreferredSize().width,
-                spr.get(name).getPreferredSize().height);
+        p1.add(data.getCharr(name));
+        data.getCharr(name).setBounds(data.getCharr(name).getPosition().width,
+                data.getCharr(name).getPosition().height,
+                data.getCharr(name).getPreferredSize().width,
+                data.getCharr(name).getPreferredSize().height);
 
     }
 
