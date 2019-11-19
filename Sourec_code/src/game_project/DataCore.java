@@ -8,7 +8,6 @@ package game_project;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import javax.swing.ImageIcon;
 
 /**
@@ -18,8 +17,8 @@ import javax.swing.ImageIcon;
  */
 public class DataCore {
 
-    private final Map<String, Charactor> charr = new HashMap<>();
-    private final Map<Integer, Boolean> keydock = new HashMap<>();
+    private Map<String, Charactor> charr = new HashMap<>();
+    private Map<Integer, Boolean> keydock = new HashMap<>();
 
     public void init() {
         this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(0, 0)));
@@ -42,7 +41,7 @@ public class DataCore {
     public void moveCharrPos(String name, Dimension dm) {
         Charactor charr_temp = charr.get(name);
         Dimension dm_temp = new Dimension(charr_temp.getPosition().width + (dm.width * charr_temp.getSpeed()),
-                            charr_temp.getPosition().height + (dm.height * charr_temp.getSpeed()));
+                charr_temp.getPosition().height + (dm.height * charr_temp.getSpeed()));
         charr_temp.setPosition(dm_temp);
         charr.put(name, charr_temp);
     }
@@ -59,4 +58,11 @@ public class DataCore {
         keydock.put(key, false);
     }
 
+    public Map<String, Charactor> getAllChar() {
+        return charr;
+    }
+    
+    public void replaceAllChar(Map<String, Charactor> charr){
+        this.charr = charr;
+    }
 }

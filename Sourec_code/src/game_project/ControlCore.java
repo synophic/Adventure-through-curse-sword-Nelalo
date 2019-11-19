@@ -37,6 +37,9 @@ public class ControlCore implements Runnable {
         data.init();
         service.init();
         display.init();
+        
+        //service.saveChar(data.getAllChar());
+        //data.replaceAllChar(service.loadChar());
 
         kl = new KeyListener() {
             @Override
@@ -46,19 +49,20 @@ public class ControlCore implements Runnable {
             @Override
             public void keyPressed(KeyEvent ke) {
                 data.set_Pressed(ke.getKeyCode());
-                //System.out.println("Pressed: " + ke.getKeyCode());
+                System.out.println("Pressed: " + ke.getKeyCode());
             }
 
             @Override
             public void keyReleased(KeyEvent ke) {
                 data.set_Released(ke.getKeyCode());
-                //System.out.println("Released: " + ke.getKeyCode());
+                System.out.println("Released: " + ke.getKeyCode());
             }
         };
 
         display.addKeyListener(kl);
 
         display.addSprite("knigth", data);
+        
         data.getCharr("knigth").setSpeed(10);
     }
 
@@ -86,7 +90,7 @@ public class ControlCore implements Runnable {
                 display.refreshCharr("knigth", data);
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
-                Thread.sleep(17);
+                Thread.sleep(17); // refresh every 17ms --> ~60fps
             } catch (InterruptedException ex) {
                 //System.out.println(ex.toString());
             }

@@ -19,7 +19,7 @@ public class Sprites extends JLabel {
 
     private boolean dying;
     //private ImageIcon img;
-        private Dimension position; //[X, Y]
+    private Dimension position; //[X, Y]
 
     public Sprites(ImageIcon img, Dimension position) {
         super(img);
