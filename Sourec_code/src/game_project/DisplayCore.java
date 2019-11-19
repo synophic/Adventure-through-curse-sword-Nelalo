@@ -57,13 +57,13 @@ public class DisplayCore extends JFrame {
 
         spr.put(name, data.getCharr(name));
         //spr.get(name).setBounds(spr.get(name).getBounds());
-        /*
+
         p1.add(spr.get(name));
         spr.get(name).setBounds(spr.get(name).getPosition().width,
                 spr.get(name).getPosition().height,
                 spr.get(name).getPreferredSize().width,
                 spr.get(name).getPreferredSize().height);
-         */
+
     }
 
 }
