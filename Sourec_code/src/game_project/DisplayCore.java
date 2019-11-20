@@ -84,7 +84,7 @@ public class DisplayCore extends JFrame implements Runnable {
         while (true) {
             try {
                 UIHandle();
-                Thread.sleep(17); // refresh every 17ms --> ~60fps
+                Thread.sleep(30); // refresh every 17ms --> ~60fps
             } catch (InterruptedException ex) {
                 Logger.getLogger(DisplayCore.class.getName()).log(Level.SEVERE, null, ex);
             }

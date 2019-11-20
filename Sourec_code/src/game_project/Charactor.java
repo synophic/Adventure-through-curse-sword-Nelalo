@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class Charactor extends Sprites {
 
-    private int health, atk, speed;
+    private int health, atk;
 
     public Charactor(ImageIcon img, Dimension position) {
         super(img, position);
@@ -36,14 +36,7 @@ public class Charactor extends Sprites {
         this.atk = atk;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-    
+   
     
 
 }

@@ -18,6 +18,7 @@ public class Sprites extends JLabel {
 
     private boolean dying;
     //private ImageIcon img;
+    private int speed;
     private Dimension position; //[X, Y]
 
     public Sprites(ImageIcon img, Dimension position) {
@@ -40,6 +41,14 @@ public class Sprites extends JLabel {
 
     public void setPosition(Dimension position) {
         this.position = position;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
 }

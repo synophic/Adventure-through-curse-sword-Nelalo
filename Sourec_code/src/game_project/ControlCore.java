@@ -10,10 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.LocalTime;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  * @author aon_c
@@ -99,8 +96,6 @@ public class ControlCore implements Runnable {
         display.addKeyListener(kl);
         display.addWindowListener(w1);
 
-        //Set charr property
-        data.getCharr("knigth").setSpeed(20);
 
     }
 
@@ -129,7 +124,8 @@ public class ControlCore implements Runnable {
         while (true) {
             try {
                 moveHandle();
-        
+                bghandle();
+
                 Thread.sleep(20);
                 //Debug
                 //System.out.println(LocalTime.now());
@@ -150,5 +146,19 @@ public class ControlCore implements Runnable {
         Dimension dm = new Dimension(dx, 0);
         data.moveCharrPos("knigth", dm);
     }
-    
+
+    private void bghandle() {
+        if (data.getCharr("knigth").getPosition().width < 50) {
+            data.moveCharrPos("knigth", new Dimension(1, 0));
+            data.moveBgPos("layer1", new Dimension(1, 0));
+            data.moveBgPos("layer2", new Dimension(1, 0));
+            data.moveBgPos("layer3", new Dimension(1, 0));
+        } else if (data.getCharr("knigth").getPosition().width > 600) {
+            data.moveCharrPos("knigth", new Dimension(-1, 0));
+            data.moveBgPos("layer1", new Dimension(-1, 0));
+            data.moveBgPos("layer2", new Dimension(-1, 0));
+            data.moveBgPos("layer3", new Dimension(-1, 0));
+        }
+    }
+
 }

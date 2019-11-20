@@ -13,20 +13,24 @@ import javax.swing.ImageIcon;
 /**
  * @author aon_c
  *
- * This is Model class. 
- * Use for handle data.
+ * This is Model class. Use for store data.
  */
 public class DataCore {
 
     private Map<String, Charactor> charr = new HashMap<>();
-    private Map<String, Charactor> bg = new HashMap<>();
+    private Map<String, Sprites> bg = new HashMap<>();
     private Map<Integer, Boolean> keydock = new HashMap<>();
 
     public void init() {
-        this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(0, 0)));
-        this.addBg("layer1", new Charactor(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
-        this.addBg("layer2", new Charactor(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
-        this.addBg("layer3", new Charactor(new ImageIcon("src/resource/BG/level1/layer3.png"), new Dimension(0, 0)));
+        this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(400, 420)));
+        this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
+        this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
+        this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level1/layer3.png"), new Dimension(0, 0)));
+        
+        getCharr("knigth").setSpeed(10);
+        getBg("layer1").setSpeed(getCharr("knigth").getSpeed()/5);
+        getBg("layer2").setSpeed(getCharr("knigth").getSpeed());
+        getBg("layer3").setSpeed(getCharr("knigth").getSpeed()*2);
     }
 
     public void addCharr(String name, Charactor charr) {
@@ -37,11 +41,11 @@ public class DataCore {
         return charr.get(name);
     }
 
-    public void addBg(String name, Charactor spr) {
+    public void addBg(String name, Sprites spr) {
         this.bg.put(name, spr);
     }
 
-    public Charactor getBg(String name) {
+    public Sprites getBg(String name) {
         return bg.get(name);
     }
 
@@ -61,8 +65,7 @@ public class DataCore {
     }
 
     public void moveBgPos(String name, Dimension dm) {
-        Dimension dm_temp = new Dimension(bg.get(name).getPosition().width + dm.width,
-                bg.get(name).getPosition().height + dm.height);
+        Dimension dm_temp = new Dimension(bg.get(name).getPosition().width + (dm.width *bg.get(name).getSpeed()), 0);
         bg.get(name).setPosition(dm_temp);
     }
 
