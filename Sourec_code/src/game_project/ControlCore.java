@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +25,7 @@ public class ControlCore implements Runnable {
     private KeyListener kl;
     private WindowAdapter w1;
     private Thread gameThread, displayThread;
-    private boolean is_paused;
+    private boolean is_paused, is_freezeCam;
 
     public void setData(DataCore data) {
         this.data = data;
@@ -49,8 +48,8 @@ public class ControlCore implements Runnable {
         gameThread = new Thread(this);
         displayThread = new Thread(display);
 
-        //service.saveChar(data.getAllChar());   //sace char data
-        //data.replaceAllChar(service.loadChar()); //load char data
+        loadGame();
+
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -74,6 +73,8 @@ public class ControlCore implements Runnable {
                         resumeGame();
                     }
                     is_paused = !is_paused;
+                } else if (ke.getKeyCode() == KeyEvent.VK_P) {
+                    is_freezeCam = !is_freezeCam;
                 }
             }
         };
@@ -86,7 +87,8 @@ public class ControlCore implements Runnable {
                 if (JOptionPane.showConfirmDialog(display,
                         "Save?", "EXIT",
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    service.saveChar(data.getAllChar());
+                    //service.saveChar(data.getAllChar());
+                    saveGame();
                     System.exit(0);
                 }
             }
@@ -100,6 +102,20 @@ public class ControlCore implements Runnable {
 
     public void addSprite(Charactor charr) {
         data.addCharr("knigth_idle_1", charr);
+    }
+
+    public void loadGame() {
+        //data.replaceAllChar(service.loadChar()); //load char data
+
+        data.replaceAllChar(service.loadChar());
+        data.replaceAllBg(service.loadBg());
+    }
+
+    public void saveGame() {
+        //service.saveChar(data.getAllChar());   //save char data
+
+        service.saveChar(data.getAllChar());
+        service.saveBg(data.getAllBg());
     }
 
     public void startGame() {
@@ -148,20 +164,22 @@ public class ControlCore implements Runnable {
     }
 
     private void bghandle() {
-        if (data.getCharr("knigth").getPosition().width < 5 && data.getBg("layer3").getPosition().width < 0) {
+        if (data.getCharr("knigth").getPosition().width < 5 && data.getBg("layer3").getPosition().width < 0 && !is_freezeCam) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
             data.moveBgPos("layer1", new Dimension(1, 0));
             data.moveBgPos("layer2", new Dimension(1, 0));
             data.moveBgPos("layer3", new Dimension(1, 0));
-        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth() / 2 - data.getCharr("knigth").getPreferredSize().width) && data.getBg("layer3").getPosition().width > -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth())) {
+        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth() / 2 - data.getCharr("knigth").getPreferredSize().width) && data.getBg("layer3").getPosition().width > -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth()) && !is_freezeCam) {
             data.moveCharrPos("knigth", new Dimension(-1, 0));
             data.moveBgPos("layer1", new Dimension(-1, 0));
             data.moveBgPos("layer2", new Dimension(-1, 0));
             data.moveBgPos("layer3", new Dimension(-1, 0));
+        } else if (data.getCharr("knigth").getPosition().width > display.getWidth() - 60 && data.getBg("layer3").getPosition().width == -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth())) {
+            nextlavel();
         } else if (data.getCharr("knigth").getPosition().width < - 20) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
-        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth())) {
-            nextlavel();
+        } else if (data.getCharr("knigth").getPosition().width > display.getWidth() - 60) {
+            data.moveCharrPos("knigth", new Dimension(-1, 0));
         }
     }
 

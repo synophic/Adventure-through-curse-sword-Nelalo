@@ -20,10 +20,10 @@ public class DataCore {
     private Map<String, Charactor> charr = new HashMap<>();
     private Map<String, Sprites> bg = new HashMap<>();
     private Map<Integer, Boolean> keydock = new HashMap<>();
-    private Dimension camera_pos;
+    //private Dimension camera_pos;
 
     public void init() {
-        camera_pos = new Dimension(0, 0);
+        //camera_pos = new Dimension(0, 0);
         this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
         this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
         this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
@@ -93,5 +93,13 @@ public class DataCore {
 
     public void replaceAllChar(Map<String, Charactor> charr) {
         this.charr = charr;
+    }
+    
+    public Map<String, Sprites> getAllBg() {
+        return bg;
+    }
+
+    public void replaceAllBg(Map<String, Sprites> bg) {
+        this.bg = bg;
     }
 }

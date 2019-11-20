@@ -12,8 +12,7 @@ import java.util.Map;
 /**
  * @author aon_c
  *
- * This is Service class. 
- * Use for handle communicate from/to external source.
+ * This is Service class. Use for handle communicate from/to external source.
  */
 public class ServiceCore {
 
@@ -28,8 +27,8 @@ public class ServiceCore {
                 FileInputStream fin = new FileInputStream(f);
                 ObjectInputStream oin = new ObjectInputStream(fin);
                 Object readed = oin.readObject();
-                if(readed != null && readed instanceof HashMap){
-                    temp.putAll((HashMap)readed);
+                if (readed != null && readed instanceof HashMap) {
+                    temp.putAll((HashMap) readed);
                 }
                 oin.close();
                 fin.close();
@@ -39,7 +38,31 @@ public class ServiceCore {
             }
 
         } else {
-            System.out.println("File not exist! Can't load.");
+            System.out.println("File at " + f.getPath() + "  not exist! Can't load.");
+        }
+        return temp;
+    }
+
+    public Map<String, Sprites> loadBg() {
+        Map<String, Sprites> temp = new HashMap<>();
+        File f = new File("src/resource/data/bg_data/bg_data_1.dat");
+        if (f.exists()) {
+            try {
+                FileInputStream fin = new FileInputStream(f);
+                ObjectInputStream oin = new ObjectInputStream(fin);
+                Object readed = oin.readObject();
+                if (readed != null && readed instanceof HashMap) {
+                    temp.putAll((HashMap) readed);
+                }
+                oin.close();
+                fin.close();
+
+            } catch (IOException | ClassNotFoundException ex) {
+                System.err.println(ex.toString());
+            }
+
+        } else {
+            System.out.println("File at " + f.getPath() + "  not exist! Can't load.");
         }
         return temp;
     }
@@ -57,7 +80,25 @@ public class ServiceCore {
                 System.err.println(ex.toString());
             }
         } else {
-            System.out.println("File not exist! Can't save.");
+            System.out.println("File at " + f.getPath() + " not exist! Can't save.");
         }
     }
+
+    public void saveBg(Map<String, Sprites> temp) {
+        File f = new File("src/resource/data/bg_data/bg_data_1.dat");
+        if (f.exists()) {
+            try {
+                FileOutputStream fout = new FileOutputStream(f);
+                ObjectOutput oout = new ObjectOutputStream(fout);
+                oout.writeObject(temp);
+                oout.close();
+                fout.close();
+            } catch (IOException ex) {
+                System.err.println(ex.toString());
+            }
+        } else {
+            System.out.println("File at " + f.getPath() + " not exist! Can't save.");
+        }
+    }
+
 }
