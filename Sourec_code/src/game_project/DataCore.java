@@ -20,17 +20,19 @@ public class DataCore {
     private Map<String, Charactor> charr = new HashMap<>();
     private Map<String, Sprites> bg = new HashMap<>();
     private Map<Integer, Boolean> keydock = new HashMap<>();
+    private Dimension camera_pos;
 
     public void init() {
+        camera_pos = new Dimension(0, 0);
         this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
         this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
         this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
         this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level1/layer3.png"), new Dimension(0, 0)));
-        
+
         getCharr("knigth").setSpeed(10);
-        getBg("layer1").setSpeed(getCharr("knigth").getSpeed()/5);
+        getBg("layer1").setSpeed(getCharr("knigth").getSpeed() / 5);
         getBg("layer2").setSpeed(getCharr("knigth").getSpeed());
-        getBg("layer3").setSpeed(getCharr("knigth").getSpeed()*2);
+        getBg("layer3").setSpeed(getCharr("knigth").getSpeed() * 2);
     }
 
     public void addCharr(String name, Charactor charr) {
@@ -44,7 +46,7 @@ public class DataCore {
     public void addBg(String name, Sprites spr) {
         this.bg.put(name, spr);
     }
-    
+
     public void removeBg(String name) {
         this.bg.remove(name);
     }
@@ -69,7 +71,7 @@ public class DataCore {
     }
 
     public void moveBgPos(String name, Dimension dm) {
-        Dimension dm_temp = new Dimension(bg.get(name).getPosition().width + (dm.width *bg.get(name).getSpeed()), 0);
+        Dimension dm_temp = new Dimension(bg.get(name).getPosition().width + (dm.width * bg.get(name).getSpeed()), 0);
         bg.get(name).setPosition(dm_temp);
     }
 

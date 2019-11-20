@@ -5,6 +5,7 @@
  */
 package game_project;
 
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -92,7 +93,8 @@ public class DisplayCore extends JFrame implements Runnable {
         while (true) {
             try {
                 UIHandle();
-                Thread.sleep(17); // refresh every 17ms --> ~60fps
+                //Increase this if lag.
+                Thread.sleep(17); // refresh every 17ms --> ~60fps 
             } catch (InterruptedException ex) {
                 Logger.getLogger(DisplayCore.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -107,7 +109,10 @@ public class DisplayCore extends JFrame implements Runnable {
                 repaint();
                 refreshBg("layer3", data);
 
-                refreshCharr("knigth", data);
+                data.getAllChar().entrySet().forEach((get) -> {
+                    refreshCharr(get.getKey(), data);
+                });
+                //refreshCharr("knigth", data);
 
                 refreshBg("layer2", data);
                 refreshBg("layer1", data);
