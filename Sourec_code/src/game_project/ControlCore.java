@@ -125,7 +125,7 @@ public class ControlCore implements Runnable {
                 moveHandle();
                 bghandle();
 
-                Thread.sleep(20);
+                Thread.sleep(17);
                 //Debug
                 //System.out.println(data.getBg("layer3").getPosition().width);
                 //System.out.println(LocalTime.now());
@@ -148,7 +148,7 @@ public class ControlCore implements Runnable {
     }
 
     private void bghandle() {
-        if (data.getCharr("knigth").getPosition().width < 50 && data.getBg("layer3").getPosition().width < 0) {
+        if (data.getCharr("knigth").getPosition().width < 5 && data.getBg("layer3").getPosition().width < 0) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
             data.moveBgPos("layer1", new Dimension(1, 0));
             data.moveBgPos("layer2", new Dimension(1, 0));
@@ -158,7 +158,7 @@ public class ControlCore implements Runnable {
             data.moveBgPos("layer1", new Dimension(-1, 0));
             data.moveBgPos("layer2", new Dimension(-1, 0));
             data.moveBgPos("layer3", new Dimension(-1, 0));
-        } else if (data.getCharr("knigth").getPosition().width < -20) {
+        } else if (data.getCharr("knigth").getPosition().width < - 20) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
         } else if (data.getCharr("knigth").getPosition().width > (display.getWidth())) {
             nextlavel();
@@ -167,6 +167,10 @@ public class ControlCore implements Runnable {
 
     private void nextlavel() {
         System.out.println("Next level");
+        data.getBg("layer1").setPosition(new Dimension(0, 0));
+        data.getBg("layer2").setPosition(new Dimension(0, 0));
+        data.getBg("layer3").setPosition(new Dimension(0, 0));
+        data.getCharr("knigth").setPosition(new Dimension(-20, 420));
     }
 
 }
