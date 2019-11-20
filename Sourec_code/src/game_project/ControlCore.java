@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.LocalTime;
 import javax.swing.JOptionPane;
 import static javax.swing.SwingUtilities.invokeLater;
 
@@ -26,6 +27,7 @@ public class ControlCore implements Runnable {
     private ServiceCore service;
     private KeyListener kl;
     private WindowAdapter w1;
+    private Thread gameThread;
 
     public void setData(DataCore data) {
         this.data = data;
@@ -44,6 +46,8 @@ public class ControlCore implements Runnable {
         data.init();
         service.init();
         display.init();
+        
+        gameThread = new Thread(this);
 
         //service.saveChar(data.getAllChar());   //sace char data
         data.replaceAllChar(service.loadChar()); //load char data
@@ -70,6 +74,7 @@ public class ControlCore implements Runnable {
         w1 = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
+                pauseGame();
                 if (JOptionPane.showConfirmDialog(display,
                         "Save?", "EXIT",
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -85,10 +90,23 @@ public class ControlCore implements Runnable {
 
         //Set charr property
         data.getCharr("knigth").setSpeed(20);
+        
     }
 
     public void addSprite(Charactor charr) {
         data.addCharr("knigth_idle_1", charr);
+    }
+    
+    public void startGame(){
+        gameThread.start();
+    }
+    
+    public void pauseGame(){
+        gameThread.suspend();
+    }
+    
+    public void resumeGame(){
+        gameThread.resume();
     }
 
     //Game loop here
@@ -116,9 +134,10 @@ public class ControlCore implements Runnable {
                 });
 
                 //display.repaint();
-                Thread.sleep(16); // refresh every 17ms --> ~60fps
+                Thread.sleep(17); // refresh every 17ms --> ~60fps
                 
                 //Debug
+                //System.out.println(LocalTime.now());
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
                 
