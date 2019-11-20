@@ -5,17 +5,21 @@
  */
 package game_project;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  * @author aon_c
  *
- * This is View class. 
- * Use for handle UI.
+ * This is View class. Use for handle UI.
  */
-public class DisplayCore extends JFrame {
+public class DisplayCore extends JFrame implements Runnable {
 
+    private DataCore data;
     private final int displayWidth;
     private final int displayHeight;
     private final String title;
@@ -27,7 +31,8 @@ public class DisplayCore extends JFrame {
         this.title = title;
     }
 
-    public void init() {
+    public void init(DataCore data) {
+        this.data = data;
         setSize(displayWidth, displayHeight);
         setTitle(title);
 
@@ -44,6 +49,15 @@ public class DisplayCore extends JFrame {
         dispose();
     }
 
+    public void pause() {
+        JLabel pa = new JLabel("PAUSED");
+        pa.setBounds(200, 200, 200, 200);
+        p1.add(pa);
+    }
+
+    public void resume() {
+    }
+
     //Rewrite character
     public void refreshCharr(String name, DataCore data) {
 
@@ -54,7 +68,7 @@ public class DisplayCore extends JFrame {
                 data.getCharr(name).getPreferredSize().height);
 
     }
-    
+
     public void refreshBg(String name, DataCore data) {
 
         p1.add(data.getBg(name));
@@ -63,5 +77,33 @@ public class DisplayCore extends JFrame {
                 data.getBg(name).getPreferredSize().width,
                 data.getBg(name).getPreferredSize().height);
 
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                UIHandle();
+                Thread.sleep(17); // refresh every 17ms --> ~60fps
+            } catch (InterruptedException ex) {
+                Logger.getLogger(DisplayCore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    private void UIHandle() {
+        //Runs inside of the Swing UI thread. Fix flicking image
+        invokeLater(new Runnable() {
+            public void run() {
+                repaint();
+                refreshBg("layer3", data);
+
+                refreshCharr("knigth", data);
+
+                refreshBg("layer2", data);
+                refreshBg("layer1", data);
+            }
+        });
     }
 }

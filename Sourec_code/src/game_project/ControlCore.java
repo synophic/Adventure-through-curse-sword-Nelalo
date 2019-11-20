@@ -11,14 +11,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalTime;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  * @author aon_c
  *
- * This is Controller class. 
- * Use for handle command.
+ * This is Controller class. Use for handle command.
  */
 public class ControlCore implements Runnable {
 
@@ -27,7 +27,8 @@ public class ControlCore implements Runnable {
     private ServiceCore service;
     private KeyListener kl;
     private WindowAdapter w1;
-    private Thread gameThread;
+    private Thread gameThread, displayThread;
+    private boolean is_paused;
 
     public void setData(DataCore data) {
         this.data = data;
@@ -45,13 +46,14 @@ public class ControlCore implements Runnable {
         //Setup other core
         data.init();
         service.init();
-        display.init();
-        
+        display.init(data);
+
         gameThread = new Thread(this);
+        displayThread = new Thread(display);
 
         //service.saveChar(data.getAllChar());   //sace char data
         data.replaceAllChar(service.loadChar()); //load char data
-        
+
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -60,13 +62,22 @@ public class ControlCore implements Runnable {
             @Override
             public void keyPressed(KeyEvent ke) {
                 data.set_Pressed(ke.getKeyCode());
-                System.out.println("Pressed: " + ke.getKeyCode());
+                System.out.println("Pressed: " + KeyEvent.getKeyText(ke.getKeyCode()));
             }
 
             @Override
             public void keyReleased(KeyEvent ke) {
                 data.set_Released(ke.getKeyCode());
-                System.out.println("Released: " + ke.getKeyCode());
+                System.out.println("Released: " + KeyEvent.getKeyText(ke.getKeyCode()));
+
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (!is_paused) {
+                        pauseGame();
+                    } else {
+                        resumeGame();
+                    }
+                    is_paused = !is_paused;
+                }
             }
         };
 
@@ -90,22 +101,25 @@ public class ControlCore implements Runnable {
 
         //Set charr property
         data.getCharr("knigth").setSpeed(20);
-        
+
     }
 
     public void addSprite(Charactor charr) {
         data.addCharr("knigth_idle_1", charr);
     }
-    
-    public void startGame(){
+
+    public void startGame() {
         gameThread.start();
+        displayThread.start();
     }
-    
-    public void pauseGame(){
+
+    public void pauseGame() {
+        //displayThread.suspend();
         gameThread.suspend();
     }
-    
-    public void resumeGame(){
+
+    public void resumeGame() {
+        //displayThread.resume();
         gameThread.resume();
     }
 
@@ -114,37 +128,27 @@ public class ControlCore implements Runnable {
     public void run() {
         while (true) {
             try {
-                /*int dy = ((data.is_pressed(KeyEvent.VK_S) || data.is_pressed(KeyEvent.VK_DOWN)) ? 1 : 0)
-                        - ((data.is_pressed(KeyEvent.VK_W) || data.is_pressed(KeyEvent.VK_UP)) ? 1 : 0);*/
-                int dx = ((data.is_pressed(KeyEvent.VK_D) || data.is_pressed(KeyEvent.VK_RIGHT)) ? 1 : 0)
-                        - ((data.is_pressed(KeyEvent.VK_A) || data.is_pressed(KeyEvent.VK_LEFT)) ? 1 : 0);
-                Dimension dm = new Dimension(dx, 0);
-                data.moveCharrPos("knigth", dm);
-
-                //Runs inside of the Swing UI thread. Fix flicking image
-                invokeLater(new Runnable() {
-                    public void run() {
-                        display.refreshBg("layer3", data);
-
-                        display.refreshCharr("knigth", data);
-
-                        display.refreshBg("layer2", data);
-                        display.refreshBg("layer1", data);
-                    }
-                });
-
-                //display.repaint();
-                Thread.sleep(17); // refresh every 17ms --> ~60fps
-                
+                moveHandle();
+        
+                Thread.sleep(20);
                 //Debug
                 //System.out.println(LocalTime.now());
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
-                
             } catch (InterruptedException ex) {
-                //System.out.println(ex.toString());
+                System.out.println(ex.toString());
             }
         }
 
     }
+
+    private void moveHandle() {
+        /*int dy = ((data.is_pressed(KeyEvent.VK_S) || data.is_pressed(KeyEvent.VK_DOWN)) ? 1 : 0)
+                        - ((data.is_pressed(KeyEvent.VK_W) || data.is_pressed(KeyEvent.VK_UP)) ? 1 : 0);*/
+        int dx = ((data.is_pressed(KeyEvent.VK_D) || data.is_pressed(KeyEvent.VK_RIGHT)) ? 1 : 0)
+                - ((data.is_pressed(KeyEvent.VK_A) || data.is_pressed(KeyEvent.VK_LEFT)) ? 1 : 0);
+        Dimension dm = new Dimension(dx, 0);
+        data.moveCharrPos("knigth", dm);
+    }
+    
 }
