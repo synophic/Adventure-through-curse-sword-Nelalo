@@ -5,8 +5,6 @@
  */
 package game_project;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author aon_c

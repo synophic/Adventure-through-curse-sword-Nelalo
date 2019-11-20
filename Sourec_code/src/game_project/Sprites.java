@@ -6,7 +6,6 @@
 package game_project;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 

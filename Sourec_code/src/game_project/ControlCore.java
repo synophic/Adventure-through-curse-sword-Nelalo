@@ -5,21 +5,19 @@
  */
 package game_project;
 
-import com.sun.java.accessibility.util.AWTEventMonitor;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import static javax.swing.SwingUtilities.invokeLater;
 
 /**
  * @author aon_c
  *
- * This class is Controller class. Use for handle command.
+ * This is Controller class. 
+ * Use for handle command.
  */
 public class ControlCore implements Runnable {
 
@@ -42,12 +40,14 @@ public class ControlCore implements Runnable {
     }
 
     public void init() {
+        //Setup other core
         data.init();
         service.init();
         display.init();
 
-        //service.saveChar(data.getAllChar());
-        data.replaceAllChar(service.loadChar());
+        //service.saveChar(data.getAllChar());   //sace char data
+        data.replaceAllChar(service.loadChar()); //load char data
+        
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -66,6 +66,7 @@ public class ControlCore implements Runnable {
             }
         };
 
+        //Ask for save on exit
         w1 = new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
@@ -78,18 +79,16 @@ public class ControlCore implements Runnable {
             }
         };
 
+        //Add listener
         display.addKeyListener(kl);
         display.addWindowListener(w1);
 
+        //Set charr property
         data.getCharr("knigth").setSpeed(20);
     }
 
     public void addSprite(Charactor charr) {
         data.addCharr("knigth_idle_1", charr);
-    }
-
-    public boolean getkeydock(int ch) {
-        return data.is_pressed(ch);
     }
 
     //Game loop here
@@ -117,9 +116,12 @@ public class ControlCore implements Runnable {
                 });
 
                 //display.repaint();
+                Thread.sleep(16); // refresh every 17ms --> ~60fps
+                
+                //Debug
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
-                Thread.sleep(16); // refresh every 17ms --> ~60fps
+                
             } catch (InterruptedException ex) {
                 //System.out.println(ex.toString());
             }

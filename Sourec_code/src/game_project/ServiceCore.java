@@ -8,12 +8,12 @@ package game_project;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author aon_c
  *
- * This class is Service class. Use for handle process, external access.
+ * This is Service class. 
+ * Use for handle communicate from/to external source.
  */
 public class ServiceCore {
 

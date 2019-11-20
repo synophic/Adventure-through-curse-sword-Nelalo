@@ -5,16 +5,14 @@
  */
 package game_project;
 
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
  * @author aon_c
  *
- * This class is View class. Use for handle UI.
+ * This is View class. 
+ * Use for handle UI.
  */
 public class DisplayCore extends JFrame {
 

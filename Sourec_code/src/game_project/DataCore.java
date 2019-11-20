@@ -13,7 +13,8 @@ import javax.swing.ImageIcon;
 /**
  * @author aon_c
  *
- * This class is Model class. Use for handle UI.
+ * This is Model class. 
+ * Use for handle data.
  */
 public class DataCore {
 
@@ -57,6 +58,12 @@ public class DataCore {
         //charr_temp.setPosition(dm_temp);
         //charr.put(name, charr_temp);
         charr.get(name).setPosition(dm_temp);
+    }
+
+    public void moveBgPos(String name, Dimension dm) {
+        Dimension dm_temp = new Dimension(bg.get(name).getPosition().width + dm.width,
+                bg.get(name).getPosition().height + dm.height);
+        bg.get(name).setPosition(dm_temp);
     }
 
     public boolean is_pressed(int key) {
