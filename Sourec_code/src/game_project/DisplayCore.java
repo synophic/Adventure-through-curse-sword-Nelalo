@@ -58,6 +58,14 @@ public class DisplayCore extends JFrame implements Runnable {
     public void resume() {
     }
 
+    public int getDisplayWidth() {
+        return displayWidth;
+    }
+
+    public int getDisplayHeight() {
+        return displayHeight;
+    }
+
     //Rewrite character
     public void refreshCharr(String name, DataCore data) {
 

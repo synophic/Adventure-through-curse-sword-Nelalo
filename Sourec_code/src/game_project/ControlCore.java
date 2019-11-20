@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -49,8 +50,7 @@ public class ControlCore implements Runnable {
         displayThread = new Thread(display);
 
         //service.saveChar(data.getAllChar());   //sace char data
-        data.replaceAllChar(service.loadChar()); //load char data
-
+        //data.replaceAllChar(service.loadChar()); //load char data
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -96,7 +96,6 @@ public class ControlCore implements Runnable {
         display.addKeyListener(kl);
         display.addWindowListener(w1);
 
-
     }
 
     public void addSprite(Charactor charr) {
@@ -128,6 +127,7 @@ public class ControlCore implements Runnable {
 
                 Thread.sleep(20);
                 //Debug
+                //System.out.println(data.getBg("layer3").getPosition().width);
                 //System.out.println(LocalTime.now());
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
@@ -148,17 +148,25 @@ public class ControlCore implements Runnable {
     }
 
     private void bghandle() {
-        if (data.getCharr("knigth").getPosition().width < 50) {
+        if (data.getCharr("knigth").getPosition().width < 50 && data.getBg("layer3").getPosition().width < 0) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
             data.moveBgPos("layer1", new Dimension(1, 0));
             data.moveBgPos("layer2", new Dimension(1, 0));
             data.moveBgPos("layer3", new Dimension(1, 0));
-        } else if (data.getCharr("knigth").getPosition().width > 600) {
+        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth() / 2 - data.getCharr("knigth").getPreferredSize().width) && data.getBg("layer3").getPosition().width > -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth())) {
             data.moveCharrPos("knigth", new Dimension(-1, 0));
             data.moveBgPos("layer1", new Dimension(-1, 0));
             data.moveBgPos("layer2", new Dimension(-1, 0));
             data.moveBgPos("layer3", new Dimension(-1, 0));
+        } else if (data.getCharr("knigth").getPosition().width < -20) {
+            data.moveCharrPos("knigth", new Dimension(1, 0));
+        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth())) {
+            nextlavel();
         }
+    }
+
+    private void nextlavel() {
+        System.out.println("Next level");
     }
 
 }

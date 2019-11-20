@@ -34,6 +34,10 @@ public class Sprites extends JLabel {
     public void setDying(boolean dying) {
         this.dying = dying;
     }
+    
+    public void setImageIcon(ImageIcon img){
+
+    }
 
     public Dimension getPosition() {
         return position;
