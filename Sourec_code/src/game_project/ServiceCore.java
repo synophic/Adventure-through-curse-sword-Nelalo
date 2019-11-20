@@ -21,7 +21,8 @@ public class ServiceCore {
 
     public Map<String, Charactor> loadChar() {
         Map<String, Charactor> temp = new HashMap<>();
-        File f = new File("src/resource/data/char_data/char_data_1.dat");
+        File f = new File("src/resource/data/char_data/char_data_1.dat"
+        );
         if (f.exists()) {
             try {
                 FileInputStream fin = new FileInputStream(f);
@@ -43,9 +44,9 @@ public class ServiceCore {
         return temp;
     }
 
-    public Map<String, Sprites> loadBg() {
+    public Map<String, Sprites> loadBg(int level) {
         Map<String, Sprites> temp = new HashMap<>();
-        File f = new File("src/resource/data/bg_data/bg_data_1.dat");
+        File f = new File("src/resource/data/bg_data/bg_data_" + level + ".dat");
         if (f.exists()) {
             try {
                 FileInputStream fin = new FileInputStream(f);
@@ -84,8 +85,8 @@ public class ServiceCore {
         }
     }
 
-    public void saveBg(Map<String, Sprites> temp) {
-        File f = new File("src/resource/data/bg_data/bg_data_1.dat");
+    public void saveBg(Map<String, Sprites> temp, int level) {
+        File f = new File("src/resource/data/bg_data/bg_data_" + level + ".dat");
         if (f.exists()) {
             try {
                 FileOutputStream fout = new FileOutputStream(f);

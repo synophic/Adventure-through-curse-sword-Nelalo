@@ -92,9 +92,9 @@ public class DisplayCore extends JFrame implements Runnable {
     public void run() {
         while (true) {
             try {
+                Thread.sleep(17); // refresh every 17ms --> ~60fps 
                 UIHandle();
                 //Increase this if lag.
-                Thread.sleep(17); // refresh every 17ms --> ~60fps 
             } catch (InterruptedException ex) {
                 Logger.getLogger(DisplayCore.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -107,15 +107,17 @@ public class DisplayCore extends JFrame implements Runnable {
         invokeLater(new Runnable() {
             public void run() {
                 repaint();
-                refreshBg("layer3", data);
+                refreshBg("layer4", data);
 
                 data.getAllChar().entrySet().forEach((get) -> {
                     refreshCharr(get.getKey(), data);
                 });
                 //refreshCharr("knigth", data);
 
+                refreshBg("layer3", data);
                 refreshBg("layer2", data);
                 refreshBg("layer1", data);
+
             }
         });
     }

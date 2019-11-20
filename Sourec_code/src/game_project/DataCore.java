@@ -21,18 +21,22 @@ public class DataCore {
     private Map<String, Sprites> bg = new HashMap<>();
     private Map<Integer, Boolean> keydock = new HashMap<>();
     //private Dimension camera_pos;
+    private int level;
 
     public void init() {
         //camera_pos = new Dimension(0, 0);
-        this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
-        this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level1/layer1.png"), new Dimension(0, 0)));
-        this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level1/layer2.png"), new Dimension(0, 0)));
-        this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level1/layer3.png"), new Dimension(0, 0)));
+        level = 1;
+        //this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
+        //this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level2/layer1.png"), new Dimension(0, 0)));
+        //this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level2/layer2.png"), new Dimension(0, 0)));
+        //this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level2/layer3.png"), new Dimension(0, 0)));
+        //this.addBg("layer4", new Sprites(new ImageIcon("src/resource/BG/level2/layer4.png"), new Dimension(0, 0)));
 
-        getCharr("knigth").setSpeed(10);
-        getBg("layer1").setSpeed(getCharr("knigth").getSpeed() / 5);
-        getBg("layer2").setSpeed(getCharr("knigth").getSpeed());
-        getBg("layer3").setSpeed(getCharr("knigth").getSpeed() * 2);
+        //getCharr("knigth").setSpeed(10);
+        //getBg("layer1").setSpeed(getCharr("knigth").getSpeed() / 5);
+        //getBg("layer2").setSpeed(getCharr("knigth").getSpeed() / 2);
+        //getBg("layer3").setSpeed(getCharr("knigth").getSpeed());
+        //getBg("layer4").setSpeed(getCharr("knigth").getSpeed() * 2);
     }
 
     public void addCharr(String name, Charactor charr) {
@@ -94,7 +98,7 @@ public class DataCore {
     public void replaceAllChar(Map<String, Charactor> charr) {
         this.charr = charr;
     }
-    
+
     public Map<String, Sprites> getAllBg() {
         return bg;
     }
@@ -102,4 +106,13 @@ public class DataCore {
     public void replaceAllBg(Map<String, Sprites> bg) {
         this.bg = bg;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
 }

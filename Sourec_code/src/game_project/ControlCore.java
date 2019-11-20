@@ -48,7 +48,7 @@ public class ControlCore implements Runnable {
         gameThread = new Thread(this);
         displayThread = new Thread(display);
 
-        loadGame();
+        loadGame(data.getLevel());
 
         kl = new KeyListener() {
             @Override
@@ -58,13 +58,13 @@ public class ControlCore implements Runnable {
             @Override
             public void keyPressed(KeyEvent ke) {
                 data.set_Pressed(ke.getKeyCode());
-                System.out.println("Pressed: " + KeyEvent.getKeyText(ke.getKeyCode()));
+                //System.out.println("Pressed: " + KeyEvent.getKeyText(ke.getKeyCode()));
             }
 
             @Override
             public void keyReleased(KeyEvent ke) {
                 data.set_Released(ke.getKeyCode());
-                System.out.println("Released: " + KeyEvent.getKeyText(ke.getKeyCode()));
+                //System.out.println("Released: " + KeyEvent.getKeyText(ke.getKeyCode()));
 
                 if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (!is_paused) {
@@ -88,7 +88,7 @@ public class ControlCore implements Runnable {
                         "Save?", "EXIT",
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     //service.saveChar(data.getAllChar());
-                    saveGame();
+                    saveGame(data.getLevel());
                     System.exit(0);
                 }
             }
@@ -104,18 +104,17 @@ public class ControlCore implements Runnable {
         data.addCharr("knigth_idle_1", charr);
     }
 
-    public void loadGame() {
+    public void loadGame(int level) {
         //data.replaceAllChar(service.loadChar()); //load char data
-
         data.replaceAllChar(service.loadChar());
-        data.replaceAllBg(service.loadBg());
+        data.replaceAllBg(service.loadBg(level));
     }
 
-    public void saveGame() {
+    public void saveGame(int level) {
         //service.saveChar(data.getAllChar());   //save char data
 
         service.saveChar(data.getAllChar());
-        service.saveBg(data.getAllBg());
+        service.saveBg(data.getAllBg(), level);
     }
 
     public void startGame() {
@@ -164,17 +163,17 @@ public class ControlCore implements Runnable {
     }
 
     private void bghandle() {
-        if (data.getCharr("knigth").getPosition().width < 5 && data.getBg("layer3").getPosition().width < 0 && !is_freezeCam) {
+        if (data.getCharr("knigth").getPosition().width < 5 && data.getBg("layer4").getPosition().width < 0 && !is_freezeCam) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
-            data.moveBgPos("layer1", new Dimension(1, 0));
-            data.moveBgPos("layer2", new Dimension(1, 0));
-            data.moveBgPos("layer3", new Dimension(1, 0));
-        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth() / 2 - data.getCharr("knigth").getPreferredSize().width) && data.getBg("layer3").getPosition().width > -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth()) && !is_freezeCam) {
+            for (int i = 1; i <= 4; i++) {
+                data.moveBgPos("layer" + i, new Dimension(1, 0));
+            }
+        } else if (data.getCharr("knigth").getPosition().width > (display.getWidth() / 2 - data.getCharr("knigth").getPreferredSize().width) && data.getBg("layer4").getPosition().width > -(data.getBg("layer4").getPreferredSize().width - display.getDisplayWidth()) && !is_freezeCam) {
             data.moveCharrPos("knigth", new Dimension(-1, 0));
-            data.moveBgPos("layer1", new Dimension(-1, 0));
-            data.moveBgPos("layer2", new Dimension(-1, 0));
-            data.moveBgPos("layer3", new Dimension(-1, 0));
-        } else if (data.getCharr("knigth").getPosition().width > display.getWidth() - 60 && data.getBg("layer3").getPosition().width == -(data.getBg("layer3").getPreferredSize().width - display.getDisplayWidth())) {
+            for (int i = 1; i <= 4; i++) {
+                data.moveBgPos("layer" + i, new Dimension(-1, 0));
+            }
+        } else if (data.getCharr("knigth").getPosition().width > display.getWidth() - 60 && data.getBg("layer4").getPosition().width == -(data.getBg("layer4").getPreferredSize().width - display.getDisplayWidth())) {
             nextlavel();
         } else if (data.getCharr("knigth").getPosition().width < - 20) {
             data.moveCharrPos("knigth", new Dimension(1, 0));
@@ -184,11 +183,18 @@ public class ControlCore implements Runnable {
     }
 
     private void nextlavel() {
-        System.out.println("Next level");
-        data.getBg("layer1").setPosition(new Dimension(0, 0));
-        data.getBg("layer2").setPosition(new Dimension(0, 0));
-        data.getBg("layer3").setPosition(new Dimension(0, 0));
+        data.setLevel(data.getLevel() + 1);
+        System.out.println("Next level is :" + data.getLevel());
+        //Wait for display thread reach sleep. This make sure not interupt for loop
+        while (!displayThread.getState().equals(Thread.State.TIMED_WAITING)) {
+            displayThread.suspend();
+            loadGame(data.getLevel());
+        }
+        //data.getBg("layer1").setPosition(new Dimension(0, 0));
+        //data.getBg("layer2").setPosition(new Dimension(0, 0));
+        //data.getBg("layer3").setPosition(new Dimension(0, 0));
         data.getCharr("knigth").setPosition(new Dimension(-20, 420));
+        displayThread.resume();
     }
 
 }
