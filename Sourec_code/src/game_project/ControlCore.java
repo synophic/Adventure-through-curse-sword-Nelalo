@@ -49,7 +49,6 @@ public class ControlCore implements Runnable {
         displayThread = new Thread(display);
 
         loadGame(data.getLevel());
-
         kl = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
@@ -139,11 +138,13 @@ public class ControlCore implements Runnable {
             try {
                 moveHandle();
                 bghandle();
-
+                jumphandle();
                 Thread.sleep(17);
                 //Debug
+                System.out.println("Pos: " + data.getCharr("knigth").getPosition().height);
+                System.out.println("Base: " + data.getCharr("knigth").getBase_pos().height);
                 //System.out.println(data.getBg("layer3").getPosition().width);
-                //System.out.println(LocalTime.now());
+                //System.out.println(LocalTime.now());ฟก
                 //System.out.println("Dx:" + dx + " Dy:" + dy);
                 //System.out.println("" + data.getCharr("knigth").getPosition().toString());
             } catch (InterruptedException ex) {
@@ -180,6 +181,30 @@ public class ControlCore implements Runnable {
         } else if (data.getCharr("knigth").getPosition().width > display.getWidth() - 60) {
             data.moveCharrPos("knigth", new Dimension(-1, 0));
         }
+    }
+
+    public void jumphandle() {
+        if (data.is_pressed(KeyEvent.VK_SPACE)) {
+            data.getCharr("knigth").setJumping(true);
+        }
+
+        if (data.getCharr("knigth").isJumping() && !data.getCharr("knigth").isFalling()) {
+            if (data.getCharr("knigth").getBase_pos().height - data.getCharr("knigth").getPosition().height < data.getCharr("knigth").getJump_heigth()) {
+                data.moveCharrPos("knigth", new Dimension(0, -data.getCharr("knigth").getJump_speed()));
+            } else {
+                data.getCharr("knigth").setJumping(false);
+                data.getCharr("knigth").setFalling(true);
+            }
+        }
+
+        if (data.getCharr("knigth").isFalling()) {
+            if (data.getCharr("knigth").getBase_pos().height > data.getCharr("knigth").getPosition().height) {
+                data.moveCharrPos("knigth", new Dimension(0, data.getCharr("knigth").getJump_speed()));
+            } else {
+                data.getCharr("knigth").setFalling(false);
+            }
+        }
+
     }
 
     private void nextlavel() {

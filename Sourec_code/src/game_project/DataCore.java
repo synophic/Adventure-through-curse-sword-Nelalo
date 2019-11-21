@@ -25,18 +25,20 @@ public class DataCore {
 
     public void init() {
         //camera_pos = new Dimension(0, 0);
-        level = 1;
-        //this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
-        //this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level2/layer1.png"), new Dimension(0, 0)));
-        //this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level2/layer2.png"), new Dimension(0, 0)));
-        //this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level2/layer3.png"), new Dimension(0, 0)));
-        //this.addBg("layer4", new Sprites(new ImageIcon("src/resource/BG/level2/layer4.png"), new Dimension(0, 0)));
+        level = 2;
+        this.addCharr("knigth", new Charactor(new ImageIcon("src/resource/Sprite/Char/Knight/knight.png"), new Dimension(-20, 420)));
+        this.addBg("layer1", new Sprites(new ImageIcon("src/resource/BG/level" + level + "/layer1.png"), new Dimension(0, 0)));
+        this.addBg("layer2", new Sprites(new ImageIcon("src/resource/BG/level" + level + "/layer2.png"), new Dimension(0, 0)));
+        this.addBg("layer3", new Sprites(new ImageIcon("src/resource/BG/level" + level + "/layer3.png"), new Dimension(0, 0)));
+        this.addBg("layer4", new Sprites(new ImageIcon("src/resource/BG/level" + level + "/layer4.png"), new Dimension(0, 0)));
 
-        //getCharr("knigth").setSpeed(10);
-        //getBg("layer1").setSpeed(getCharr("knigth").getSpeed() / 5);
-        //getBg("layer2").setSpeed(getCharr("knigth").getSpeed() / 2);
-        //getBg("layer3").setSpeed(getCharr("knigth").getSpeed());
-        //getBg("layer4").setSpeed(getCharr("knigth").getSpeed() * 2);
+        getCharr("knigth").setSpeed(10);
+        getCharr("knigth").setJump_heigth(150);
+        getCharr("knigth").setJump_speed(2);
+        getBg("layer1").setSpeed(getCharr("knigth").getSpeed() / 5);
+        getBg("layer2").setSpeed(getCharr("knigth").getSpeed() / 2);
+        getBg("layer3").setSpeed(getCharr("knigth").getSpeed());
+        getBg("layer4").setSpeed(getCharr("knigth").getSpeed() * 2);
     }
 
     public void addCharr(String name, Charactor charr) {
