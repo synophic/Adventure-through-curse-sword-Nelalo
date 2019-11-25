@@ -63,6 +63,8 @@ public class BossSlime extends Enemy{
         ATK = 45;
         DEF = 70;
         
+        enemyType = BOSS;
+        
         //load sprites
         try {
             

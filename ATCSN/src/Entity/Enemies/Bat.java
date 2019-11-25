@@ -64,6 +64,8 @@ public class Bat extends Enemy{
         ATK = 20;
         DEF = 15;
         
+        enemyType = NORMAL;
+        
         //load sprites
         try {
             

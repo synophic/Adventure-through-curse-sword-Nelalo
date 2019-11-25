@@ -23,6 +23,11 @@ public class Enemy extends MapObject{
     protected boolean invisible;
     protected long invisibleTimer;
     
+    protected int enemyType;
+    
+    public static final int NORMAL = 0;
+    public static final int BOSS = 0;
+    
     public Enemy(TileMap tm) {
         super(tm);
     }
@@ -41,6 +46,10 @@ public class Enemy extends MapObject{
 
     public double getDEF() {
         return DEF;
+    }
+    
+    public int getType() {
+        return enemyType;
     }
 
     public boolean isHited() {

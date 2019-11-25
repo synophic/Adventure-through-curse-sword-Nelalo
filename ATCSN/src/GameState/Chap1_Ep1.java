@@ -11,7 +11,7 @@ import TileMap.*;
 import atcsn.GamePanel;
 
 import java.awt.event.KeyEvent;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,7 @@ public class Chap1_Ep1 extends GameState{
     private Background bg;
     private Player player;
     private ArrayList<Enemy> enemies;
+    private HUD hud;
 
     public Chap1_Ep1(GameStateManager gsm) {
         this.gsm = gsm;
@@ -42,12 +43,30 @@ public class Chap1_Ep1 extends GameState{
         player = new Player(tileMap);
         player.setPosition(100, 200);
         
-        enemies = new ArrayList<Enemy>();
-        Bat b;
-        b = new Bat(tileMap);
-        b.setPosition(1120, 72);
-        enemies.add(b);
+        populateEnemies();
         
+        hud = new HUD(player);
+        
+    }
+    
+    private void populateEnemies() {
+        enemies = new ArrayList<Enemy>();
+        
+        Bat bat;
+        Point[] points = new Point[] {
+            new Point(1120, 72),
+            new Point(1344, 104),
+            new Point(1440, 136),
+            new Point(1600, 104),
+            new Point(1760, 200),
+            new Point(1856, 200),
+            new Point(1952, 200)
+        };
+        for (int i = 0; i < points.length; i++) {
+            bat = new Bat(tileMap);
+            bat.setPosition(points[i].x, points[i].y);
+            enemies.add(bat);
+        }
     }
 
     @Override
@@ -90,7 +109,10 @@ public class Chap1_Ep1 extends GameState{
         //draw enemies
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).draw(g);
+            //draw hud
         }
+        
+        hud.draw(g, enemies);
         
     }
 

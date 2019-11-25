@@ -178,7 +178,7 @@ public class Player extends MapObject {
                     
             Enemy e = enemies.get(i);
         
-            if(animation.getFrame() != 2)
+            if(animation.getFrame() != 1) {
             //check combo 1
             if(comboing1 && !e.isHited()) {
                 if(facingRight) {
@@ -254,13 +254,16 @@ public class Player extends MapObject {
                 }
             }
             
+            }
+            
             if(currentAction == COMBO_1 || currentAction == COMBO_2 ||currentAction == COMBO_3) {
                 if(animation.hasPlayedOnce()){
                     e.setHited();
                 }
             }
+            }
 
-        }
+        
         
     }
     
@@ -343,8 +346,6 @@ public class Player extends MapObject {
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
-        
-        System.out.println(health + "");
         
         //stop attack
         if(currentAction == COMBO_1) {
