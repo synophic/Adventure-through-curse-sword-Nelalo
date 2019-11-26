@@ -5,48 +5,68 @@
  */
 package GameState;
 
+import java.io.File;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+//import org.newdawn.slick.Music;
+//import org.newdawn.slick.SlickException;
+//import org.newdawn.slick.Sound;
 
 /**
  *
  * @author synophic
  */
 public class AudioPlayer {
-    
-    public static Map<String, Sound> soundMap = new HashMap<String, Sound>();
-    public static Map<String, Music> musicMap = new HashMap<String, Music>();
-    
+
+    public static Map<String, Clip> soundMap = new HashMap<String, Clip>();
+    public static Map<String, Clip> musicMap = new HashMap<String, Clip>();
+
     public static void load() {
-        
-        try {
-            soundMap.put("dead", new Sound("/Sound/SFX/dead.wav"));
-            soundMap.put("hit", new Sound("/Sound/SFX/hit.wav"));
-            soundMap.put("jump", new Sound("/Sound/SFX/jump.wav"));
-            soundMap.put("slash1", new Sound("/Sound/SFX/slash1.wav"));
-            soundMap.put("slash2", new Sound("/Sound/SFX/slash2.wav"));
-            soundMap.put("slash3", new Sound("/Sound/SFX/slash3.wav"));
-            
-            musicMap.put("menu", new Music("/Sound/BGM/menu.ogg"));
-            musicMap.put("ep1", new Music("/Sound/BGM/ep1.wav"));
-            musicMap.put("gameOver", new Music("/Sound/BGM/gameOver.ogg"));
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }
-        
+        soundMap.put("dead", loadSound("src/Sound/SFX/dead.wav", 1f));
+        soundMap.put("hit", loadSound("src/Sound/SFX/hit.wav", 1f));
+        soundMap.put("jump", loadSound("src/Sound/SFX/jump.wav", 1f));
+        soundMap.put("slash1", loadSound("src/Sound/SFX/slash1.wav", 1f));
+        soundMap.put("slash2", loadSound("src/Sound/SFX/slash2.wav", 1f));
+        soundMap.put("slash3", loadSound("src/Sound/SFX/slash3.wav", 1f));
+        //musicMap.put("menu", loadSound("src/Sound/BGM/menu.ogg", 0f));
+        musicMap.put("ep1", loadSound("src/Sound/BGM/ep1.wav", -9f));
+        //musicMap.put("gameOver", loadSound("src/Sound/BGM/gameOver.ogg", 0f));
+
+        //getMusic("ep1").start();
+        //getMusic("ep1").stop();
     }
-    
-    public static Music getMusic(String key) {
-        return musicMap.get(key);
-    }
-    
-    public static Sound getSound(String key) {
+
+    public static Clip getSound(String key) {
         return soundMap.get(key);
     }
-    
+
+    public static Clip getMusic(String key) {
+        return musicMap.get(key);
+    }
+
+    public static Clip loadSound(String url, float gain) {
+        try {
+            File f = new File(url);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(f);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(gain);
+            return clip;
+        } catch (LineUnavailableException | UnsupportedAudioFileException | IOException ex) {
+            Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }
