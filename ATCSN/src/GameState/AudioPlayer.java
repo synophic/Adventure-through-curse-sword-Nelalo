@@ -37,9 +37,9 @@ public class AudioPlayer {
         soundMap.put("slash1", loadSound("src/Sound/SFX/slash1.wav", 1f));
         soundMap.put("slash2", loadSound("src/Sound/SFX/slash2.wav", 1f));
         soundMap.put("slash3", loadSound("src/Sound/SFX/slash3.wav", 1f));
-        //musicMap.put("menu", loadSound("src/Sound/BGM/menu.ogg", 0f));
+        musicMap.put("menu", loadSound("src/Sound/BGM/menu.wav", 0f));
         musicMap.put("ep1", loadSound("src/Sound/BGM/ep1.wav", -9f));
-        //musicMap.put("gameOver", loadSound("src/Sound/BGM/gameOver.ogg", 0f));
+        musicMap.put("gameOver", loadSound("src/Sound/BGM/gameOver.wav", 0f));
 
         //getMusic("ep1").start();
         //getMusic("ep1").stop();
