@@ -20,6 +20,7 @@ public class GameStateManager {
     //Game State List
     public static final int MENUSTATE = 0;
     public static final int CH1_EP1STATE = 1;
+    public static final int GAMEOVERSTATE = 2;
 
     public GameStateManager() {
         
@@ -28,6 +29,7 @@ public class GameStateManager {
         currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
         gameStates.add(new Chap1_Ep1(this));
+        gameStates.add(new GameOverState(this));
         
     }
     

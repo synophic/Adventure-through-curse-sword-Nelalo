@@ -26,6 +26,8 @@ public class Chap1_Ep1 extends GameState{
     private Player player;
     private ArrayList<Enemy> enemies;
     private HUD hud;
+    private long Timer;
+    private boolean endGame;
 
     public Chap1_Ep1(GameStateManager gsm) {
         this.gsm = gsm;
@@ -46,6 +48,9 @@ public class Chap1_Ep1 extends GameState{
         populateEnemies();
         
         hud = new HUD(player);
+        endGame = false;
+        
+        AudioPlayer.load();
         
     }
     
@@ -67,10 +72,25 @@ public class Chap1_Ep1 extends GameState{
             bat.setPosition(points[i].x, points[i].y);
             enemies.add(bat);
         }
+        WolfBoss wolf = new WolfBoss(tileMap);
+        wolf.setPosition(2912, 80);
+        enemies.add(wolf);
     }
 
     @Override
     public void update() {
+        
+        if(endGame) {
+            long elapsed = (System.nanoTime() - Timer) / 1000000;
+            if(elapsed > 1000) {
+                gsm.setState(GameStateManager.MENUSTATE);
+            }
+        }
+        
+        if(player.isDead() && !endGame) {
+            endGame = true;
+            Timer = System.nanoTime();
+        }
         
         //attack enemies
         player.checkAttack(enemies);
@@ -87,6 +107,10 @@ public class Chap1_Ep1 extends GameState{
             Enemy e = enemies.get(i);
             e.update(player);
             if(e.isDead()) {
+                if(e.getType() == Enemy.BOSS && !endGame) {
+                    endGame = true;
+                    Timer = System.nanoTime();
+                }
                 enemies.remove(i);
                 i--;
             }

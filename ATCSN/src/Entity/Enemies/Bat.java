@@ -160,8 +160,6 @@ public class Bat extends Enemy{
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
         
-        //System.out.println(health +"");
-        
         if(intersects(player)) {
             attack(ATK, player);
         }

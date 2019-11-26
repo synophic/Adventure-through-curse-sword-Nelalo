@@ -26,7 +26,7 @@ public class Enemy extends MapObject{
     protected int enemyType;
     
     public static final int NORMAL = 0;
-    public static final int BOSS = 0;
+    public static final int BOSS = 1;
     
     public Enemy(TileMap tm) {
         super(tm);

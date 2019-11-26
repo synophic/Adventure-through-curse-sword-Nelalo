@@ -170,6 +170,12 @@ public class Player extends MapObject {
     public void setAttacking() {
         this.attacking = true;
     }
+
+    public boolean isDead() {
+        return dead;
+    }
+    
+    
     
     public void checkAttack(ArrayList<Enemy> enemies) {
         
@@ -178,7 +184,7 @@ public class Player extends MapObject {
                     
             Enemy e = enemies.get(i);
         
-            if(animation.getFrame() != 1) {
+            if(animation.getFrame() == 1) {
             //check combo 1
             if(comboing1 && !e.isHited()) {
                 if(facingRight) {
@@ -330,6 +336,11 @@ public class Player extends MapObject {
         }
         
         //falling
+        if(y + cwidth / 2 > tileMap.getHeight()) {
+            dy = 0;
+            dead = true;
+            falling = false;
+        }
         if(falling) {
             dy += fallSpeed;
             
@@ -346,6 +357,8 @@ public class Player extends MapObject {
         getNextPosition();
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
+        
+        System.out.println(dead + "");
         
         //stop attack
         if(currentAction == COMBO_1) {

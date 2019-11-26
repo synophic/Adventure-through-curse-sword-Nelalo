@@ -48,6 +48,7 @@ public abstract class MapObject {
     protected boolean topRight;
     protected boolean bottomLeft;
     protected boolean bottomRight;
+    protected boolean collision;
     
     //animation
     protected Animation animation;
@@ -121,9 +122,11 @@ public abstract class MapObject {
             if(topLeft || topRight) {
                 dy = 0;
                 ytemp = currRow * tileSize + cheight / 2;
+                collision = true;
             }
             else {
                 ytemp += dy;
+                collision = false;
             }
         }
         if(dy > 0) {
@@ -131,9 +134,11 @@ public abstract class MapObject {
                 dy = 0;
                 falling = false;
                 ytemp = (currRow + 1) * tileSize - cheight / 2;
+                collision = true;
             }
             else {
                 ytemp += dy;
+                collision = false;
             }
         }
         
@@ -142,18 +147,22 @@ public abstract class MapObject {
             if(topLeft || bottomLeft) {
                 dx = 0;
                 xtemp = currCol * tileSize + cwidth / 2;
+                collision = true;
             }
             else {
                 xtemp += dx;
+                collision = false;
             }
         }
         if(dx > 0) {
             if(topRight || bottomRight) {
                 dx = 0;
                 xtemp = (currCol + 1) * tileSize - cwidth / 2;
+                collision = true;
             }
             else {
                 xtemp += dx;
+                collision = false;
             }
         }
         
