@@ -358,8 +358,6 @@ public class Player extends MapObject {
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
         
-        System.out.println(dead + "");
-        
         //stop attack
         if(currentAction == COMBO_1) {
             if(animation.hasPlayedOnce() && nextCombo){

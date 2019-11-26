@@ -41,6 +41,8 @@ public class MenuState extends GameState{
             e.printStackTrace();
         }
         
+        AudioPlayer.load();
+        
     }
 
     @Override

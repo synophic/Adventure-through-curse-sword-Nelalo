@@ -64,14 +64,14 @@ public class WolfBoss extends Enemy{
         stopJumpSpeed = 0.3;
         
         width = height = 112;
-        cwidth = 54;
+        cwidth = 60;
         cheight = 24;
         
         facingRight = false;
         waiting = true;
         
         health = maxHealth = 250;
-        ATK = 65;
+        ATK = 35;
         DEF = 40;
         
         biteScale = 0.5;

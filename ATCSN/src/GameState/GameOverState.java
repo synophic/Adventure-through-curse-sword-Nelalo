@@ -22,7 +22,7 @@ public class GameOverState extends GameState{
         this.gsm = gsm;
         
         try {
-            bg = new Background("/background/title.png",1);
+            bg = new Background("/background/gameOver.png",1);
             bg.setVector(0, 0);
         } catch(Exception e) {
             e.printStackTrace();

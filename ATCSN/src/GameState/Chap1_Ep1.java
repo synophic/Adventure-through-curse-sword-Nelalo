@@ -50,7 +50,6 @@ public class Chap1_Ep1 extends GameState{
         hud = new HUD(player);
         endGame = false;
         
-        AudioPlayer.load();
         
     }
     
@@ -83,7 +82,7 @@ public class Chap1_Ep1 extends GameState{
         if(endGame) {
             long elapsed = (System.nanoTime() - Timer) / 1000000;
             if(elapsed > 1000) {
-                gsm.setState(GameStateManager.MENUSTATE);
+                gsm.setState(GameStateManager.GAMEOVERSTATE);
             }
         }
         

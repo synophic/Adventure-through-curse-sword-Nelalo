@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/AudioPlayer.java</file>
             <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/GameOverState.java</file>
             <file>file:/C:/Users/synophic/Desktop/ATCSN/src/Entity/Player.java</file>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/atcsn/GamePanel.java</file>
             <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/Chap1_Ep1.java</file>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/Entity/Animation.java</file>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/GameStateManager.java</file>
             <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/MenuState.java</file>
-            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/Entity/Enemies/WolfBoss.java</file>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/atcsn/ATCSN.java</file>
+            <file>file:/C:/Users/synophic/Desktop/ATCSN/src/GameState/GameState.java</file>
         </group>
     </open-files>
 </project-private>
