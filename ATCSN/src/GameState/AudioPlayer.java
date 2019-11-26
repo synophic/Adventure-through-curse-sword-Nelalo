@@ -31,7 +31,7 @@ public class AudioPlayer {
     public static Map<String, Clip> musicMap = new HashMap<String, Clip>();
 
     public static void load() {
-        soundMap.put("dead", loadSound("src/Sound/SFX/dead.wav", 1f));
+        soundMap.put("dead", loadSound("src/Sound/SFX/dead.wav", 1f)); // volume [-10f <-> 10f] 0f is normal
         soundMap.put("hit", loadSound("src/Sound/SFX/hit.wav", 1f));
         soundMap.put("jump", loadSound("src/Sound/SFX/jump.wav", 1f));
         soundMap.put("slash1", loadSound("src/Sound/SFX/slash1.wav", 1f));
@@ -43,6 +43,7 @@ public class AudioPlayer {
 
         //getMusic("ep1").start();
         //getMusic("ep1").stop();
+        //getMusic("ep1").loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static Clip getSound(String key) {
