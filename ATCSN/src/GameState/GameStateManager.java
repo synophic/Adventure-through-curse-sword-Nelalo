@@ -17,10 +17,21 @@ public class GameStateManager {
     private ArrayList<GameState> gameStates;
     private int currentState;
     
+    //over all score
+    private int enemyKill;
+    private double dmgDeal;
+    private double dmgTaken;
+    private int score;
+    
     //Game State List
     public static final int MENUSTATE = 0;
-    public static final int CH1_EP1STATE = 1;
-    public static final int GAMEOVERSTATE = 2;
+    public static final int HOWTO1 = 1;
+    public static final int HOWTO2 = 2;
+    public static final int HOWTO3 = 3;
+    public static final int CH1_EP1STATE = 4;
+    public static final int CH1_EP2STATE = 5;
+    public static final int LEVELCLEARSTATE = 6;
+    public static final int GAMEOVERSTATE = 7;
 
     public GameStateManager() {
         
@@ -28,9 +39,50 @@ public class GameStateManager {
         
         currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
+        gameStates.add(new Tutorial(this, "/background/howTo1.png", MENUSTATE, HOWTO2, 12, 150));
+        gameStates.add(new Tutorial(this, "/background/howTo2.png", HOWTO1, HOWTO3, 10, 150));
+        gameStates.add(new Tutorial(this, "/background/howTo3.png", HOWTO2, MENUSTATE, 12, 150));
         gameStates.add(new Chap1_Ep1(this));
+        gameStates.add(new Chap1_Ep2(this));
+        gameStates.add(new levelClear(this));
         gameStates.add(new GameOverState(this));
         
+    }
+
+    public void setEnemyKill(int enemyKill) {
+        this.enemyKill = enemyKill;
+    }
+
+    public void setDmgDeal(double dmgDeal) {
+        this.dmgDeal = dmgDeal;
+    }
+
+    public void setDmgTaken(double dmgTaken) {
+        this.dmgTaken = dmgTaken;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getEnemyKill() {
+        return enemyKill;
+    }
+
+    public double getDmgDeal() {
+        return dmgDeal;
+    }
+
+    public double getDmgTaken() {
+        return dmgTaken;
+    }
+
+    public int getScore() {
+        return score;
+    }
+    
+    public void setInit(int state) {
+        gameStates.get(state).init();
     }
     
     public void setState(int state) {

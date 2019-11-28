@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 public class WolfBoss extends Enemy{
     
     private boolean waiting;
+    private boolean walking;
     private boolean startAction;
     
     //bite
@@ -70,7 +71,7 @@ public class WolfBoss extends Enemy{
         facingRight = false;
         waiting = true;
         
-        health = maxHealth = 250;
+        health = maxHealth = 200;
         ATK = 35;
         DEF = 40;
         
@@ -174,7 +175,7 @@ public class WolfBoss extends Enemy{
     protected void getNextPosition(Player p) {
         
         if(waiting) {
-            if(x - 200 < p.getX()) {
+            if(x - 300 < p.getX()) {
                 waiting = false;
                 waitTimer = System.nanoTime();
             }
@@ -182,13 +183,12 @@ public class WolfBoss extends Enemy{
         
         else {
             long elapsed = (System.nanoTime() - waitTimer) / 1000000;
-            if(elapsed > 3000) {
+            if(elapsed > 1500) {
+                waitTimer = System.nanoTime();
                 int i = r.nextInt(3);
                 if(i == 1) {
                     biting = true;
-                    left = false;
-                    right = false;
-                    
+                    walking = false;
                     if(x < p.getX()) {
                         facingRight = false;
                     }
@@ -198,9 +198,7 @@ public class WolfBoss extends Enemy{
                 }
                 else if(i == 2) {
                     scratching = true;
-                    left = false;
-                    right = false;
-                    
+                    walking = false;
                     if(x < p.getX()) {
                         facingRight = false;
                     }
@@ -208,29 +206,67 @@ public class WolfBoss extends Enemy{
                         facingRight = true;
                     }
                 }
+                else {
+                    walking = true;
+                }
             }
             
-            else if(collision == true && facingRight){
-                left = false;
-                right = true;
-                facingRight = false;
-            }
-            else if(collision == true && !facingRight){
-                left = true;
-                right = false;
-                facingRight = true;
+            if(walking) {
+                //if boss hit wall it will roll back
+                if(collision == true && facingRight){
+                    left = false;
+                    right = true;
+                    facingRight = false;
+                }
+                else if(collision == true && !facingRight){
+                    left = true;
+                    right = false;
+                    facingRight = true;
+                }
+                
+                //boss will move around player for 30 pixel for each side
+                else if(x < p.getX() - 60) {
+                    left = false;
+                    right = true;
+                    facingRight = false;
+                }
+                else if(x > p.getX() + 60) {
+                    left = true;
+                    right = false;
+                    facingRight = true;
+                }
+                
+                //movement
+                if(left) {
+                    dx -= moveSpeed;
+                    if(dx < -maxSpeed) {
+                        dx = -maxSpeed;
+                    }
+                }
+                else if(right) {
+                    dx += moveSpeed;
+                    if(dx > maxSpeed) {
+                        dx = maxSpeed;
+                    }
+                }
+                else {
+                    if(dx > 0) {
+                        dx -= stopSpeed;
+                        if(dx < 0) {
+                            dx = 0;
+                        }
+                    }
+                    else if(dx < 0) {
+                        dx += stopSpeed;
+                        if(dx > 0) {
+                            dx = 0;
+                        }
+                    }
+                }
+                
             }
             
-            else if(x < p.getX() - 100 && (!scratching || !biting)) {
-                left = false;
-                right = true;
-                facingRight = false;
-            }
-            else if(x > p.getX() + 100 && (!scratching || !biting)) {
-                left = true;
-                right = false;
-                facingRight = true;
-            }
+            
         }
         
         //cannot moving while attack
@@ -239,33 +275,7 @@ public class WolfBoss extends Enemy{
             dx = 0;
         }
         
-        //movement
-        if(left) {
-            dx -= moveSpeed;
-            if(dx < -maxSpeed) {
-                dx = -maxSpeed;
-            }
-        }
-        else if(right) {
-            dx += moveSpeed;
-            if(dx > maxSpeed) {
-                dx = maxSpeed;
-            }
-        }
-        else {
-            if(dx > 0) {
-                dx -= stopSpeed;
-                if(dx < 0) {
-                    dx = 0;
-                }
-            }
-            else if(dx < 0) {
-                dx += stopSpeed;
-                if(dx > 0) {
-                    dx = 0;
-                }
-            }
-        }
+        
         
         //jumping
         if(jumping && !falling) {
@@ -290,31 +300,21 @@ public class WolfBoss extends Enemy{
         getNextPosition(p);
         checkTileMapCollision();
         setPosition(xtemp, ytemp);
-        
         checkAttack(p);
-        if((currentAction == BITING || currentAction == SCRATCHING) && ! startAction) {
-            waitTimer = System.nanoTime();
-            startAction = true;
-        }
-        else if(currentAction == BITING  && animation.hasPlayedOnce() && startAction) {
-            startAction = false;
-            biting = false;
-        }
-        else if(currentAction == SCRATCHING  && animation.hasPlayedOnce() && startAction) {
-            startAction = false;
-            scratching = false;
-        }
         
         if(health == 0) dead = true;
         
-        if(left || right) {
-            if(currentAction != WALKING) {
-                currentAction = WALKING;
-                animation.setFrames(sprites.get(WALKING));
-                animation.setDelay(100);
-            }
+        if(currentAction == BITING  && animation.hasPlayedOnce()) {
+            biting = false;
+            walking = true;
         }
-        else if(biting) {
+        else if(currentAction == SCRATCHING  && animation.hasPlayedOnce()) {
+            scratching = false;
+            walking = true;
+        }
+        
+        
+        if(biting) {
             if(currentAction != BITING) {
                 currentAction = BITING;
                 animation.setFrames(sprites.get(BITING));
@@ -325,6 +325,13 @@ public class WolfBoss extends Enemy{
             if(currentAction != SCRATCHING) {
                 currentAction = SCRATCHING;
                 animation.setFrames(sprites.get(SCRATCHING));
+                animation.setDelay(100);
+            }
+        }
+        else if(left || right) {
+            if(currentAction != WALKING) {
+                currentAction = WALKING;
+                animation.setFrames(sprites.get(WALKING));
                 animation.setDelay(100);
             }
         }

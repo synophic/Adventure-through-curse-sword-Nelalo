@@ -28,6 +28,10 @@ public class Player extends MapObject {
     private boolean flinching;
     private long flinchTimer;
     
+    //over all score
+    private double dmgDeal;
+    private double dmgTaken;
+    
     //combo property
     private boolean nextCombo;
     private boolean attacking;
@@ -174,8 +178,22 @@ public class Player extends MapObject {
     public boolean isDead() {
         return dead;
     }
-    
-    
+
+    public double getDmgDeal() {
+        return dmgDeal;
+    }
+
+    public double getDmgTaken() {
+        return dmgTaken;
+    }
+
+    public void setDmgDeal(double dmgDeal) {
+        this.dmgDeal += dmgDeal;
+    }
+
+    public void setDmgTaken(double dmgTaken) {
+        this.dmgTaken += dmgTaken;
+    }
     
     public void checkAttack(ArrayList<Enemy> enemies) {
         
@@ -193,7 +211,7 @@ public class Player extends MapObject {
                         e.getY() > y - combos1_height / 2 &&
                         e.getY() < y + combos1_height / 2) 
                     {
-                        e.hit(ATK * combos1_Scale);
+                        e.hit(ATK * combos1_Scale, this);
                     }
                     
                 }
@@ -204,7 +222,7 @@ public class Player extends MapObject {
                             e.getY() > y - combos1_height / 2 &&
                             e.getY() < y + combos1_height / 2) 
                     {
-                        e.hit(ATK * combos1_Scale);
+                        e.hit(ATK * combos1_Scale, this);
                     }
                     
                 }
@@ -218,7 +236,7 @@ public class Player extends MapObject {
                         e.getY() > y - combos2_height / 2 &&
                         e.getY() < y + combos2_height / 2) 
                     {
-                        e.hit(ATK * combos2_Scale);
+                        e.hit(ATK * combos2_Scale, this);
                     }
                     
                 }
@@ -229,7 +247,7 @@ public class Player extends MapObject {
                             e.getY() > y - combos2_height / 2 &&
                             e.getY() < y + combos2_height / 2) 
                     {
-                        e.hit(ATK * combos2_Scale);
+                        e.hit(ATK * combos2_Scale, this);
                     }
                     
                 }
@@ -243,7 +261,7 @@ public class Player extends MapObject {
                         e.getY() > y - combos3_height / 2 &&
                         e.getY() < y + combos3_height / 2) 
                     {
-                        e.hit(ATK * combos3_Scale);
+                        e.hit(ATK * combos3_Scale, this);
                     }
                     
                 }
@@ -254,7 +272,7 @@ public class Player extends MapObject {
                             e.getY() > y - combos3_height / 2 &&
                             e.getY() < y + combos3_height / 2) 
                     {
-                        e.hit(ATK * combos3_Scale);
+                        e.hit(ATK * combos3_Scale, this);
                     }
                     
                 }
@@ -277,6 +295,7 @@ public class Player extends MapObject {
         if(flinching) return;
         damage *= 1 - (DEF * 0.35 / 100);
         health -= damage;
+        setDmgTaken(damage);
         if(health < 0) health = 0;
         if(health == 0) dead = true;
         flinching = true;
@@ -284,6 +303,10 @@ public class Player extends MapObject {
     }
     
     private void getNextPosition() {
+        
+        if(y > tileMap.getHeight() - 35) {
+            dead = true;
+        }
         
         //movement
         if(left) {
@@ -341,6 +364,7 @@ public class Player extends MapObject {
             dead = true;
             falling = false;
         }
+        
         if(falling) {
             dy += fallSpeed;
             
@@ -353,11 +377,14 @@ public class Player extends MapObject {
     
     public void update() {
         
-        //update position
-        getNextPosition();
-        checkTileMapCollision();
-        setPosition(xtemp, ytemp);
         
+        //update position
+        if(!dead) {
+            getNextPosition();
+            checkTileMapCollision();
+            setPosition(xtemp, ytemp);
+        
+        }
         //stop attack
         if(currentAction == COMBO_1) {
             if(animation.hasPlayedOnce() && nextCombo){

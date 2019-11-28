@@ -52,10 +52,10 @@ public class Background {
     public void draw(Graphics2D g) {
         g.drawImage(image, (int)x, (int)y, null);
         if(x < 0) {
-            g.drawImage(image, (int)x + GamePanel.WIDTH, (int)y, null);
+            g.drawImage(image, (int)x + image.getWidth(), (int)y, null);
         }
         if(x > 0) {
-            g.drawImage(image, (int)x - GamePanel.WIDTH, (int)y, null);
+            g.drawImage(image, (int)x - image.getWidth(), (int)y, null);
         }
     }
     

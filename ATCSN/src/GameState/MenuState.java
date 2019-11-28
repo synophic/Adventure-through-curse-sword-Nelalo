@@ -41,7 +41,6 @@ public class MenuState extends GameState{
             e.printStackTrace();
         }
         
-        AudioPlayer.load();
         
     }
 
@@ -80,7 +79,7 @@ public class MenuState extends GameState{
             gsm.setState(GameStateManager.CH1_EP1STATE);
         }
         if(currentChoice == 1) {
-            
+            gsm.setState(GameStateManager.HOWTO1);
         }
         if(currentChoice == 2) {
             

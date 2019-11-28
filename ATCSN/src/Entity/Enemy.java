@@ -6,6 +6,7 @@
 package Entity;
 
 import TileMap.TileMap;
+import java.awt.Color;
 
 /**
  *
@@ -64,11 +65,12 @@ public class Enemy extends MapObject{
         return dead;
     }
     
-    public void hit(double damage) {
+    public void hit(double damage, Player p) {
         if(dead || invisible || health == 0) return;
         hited = true;
         damage *= 1 - (DEF * 0.35 / 100);
         health -= damage;
+        p.setDmgDeal(damage);
         if(health < 0) health = 0;
     }
     

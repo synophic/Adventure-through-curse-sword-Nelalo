@@ -6,6 +6,7 @@
 package GameState;
 
 import TileMap.Background;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -45,11 +46,16 @@ public class GameOverState extends GameState{
     public void draw(Graphics2D g) {
         //draw bg
         bg.draw(g);
+        Font font = new Font("Arial",Font.PLAIN,10);
+        g.setFont(font);
+        g.setColor(Color.RED);
+        g.drawString("Main menu", 175, 238);
     }
 
     @Override
     public void keyPressed(int k) {
         if(k == KeyEvent.VK_ENTER) {
+            gsm.setInit(GameStateManager.CH1_EP1STATE);
             gsm.setState(GameStateManager.MENUSTATE);
         }
     }

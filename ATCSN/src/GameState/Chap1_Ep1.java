@@ -27,7 +27,10 @@ public class Chap1_Ep1 extends GameState{
     private ArrayList<Enemy> enemies;
     private HUD hud;
     private long Timer;
-    private boolean endGame;
+    private boolean lose;
+    private boolean win;
+    private int score;
+    private int enemyKill;
 
     public Chap1_Ep1(GameStateManager gsm) {
         this.gsm = gsm;
@@ -38,7 +41,7 @@ public class Chap1_Ep1 extends GameState{
     public void init() {
         tileMap = new TileMap(32);
         tileMap.loadTiles("/Sprite/forestTile.png");
-        tileMap.loadMap("/source/lv1_ep1/lv1_1.map");
+        tileMap.loadMap("/source/lv1_1.map");
         tileMap.setPosition(0, 0);
         
         bg = new Background("/background/nightForest.png", 0.1);
@@ -48,8 +51,10 @@ public class Chap1_Ep1 extends GameState{
         populateEnemies();
         
         hud = new HUD(player);
-        endGame = false;
-        
+        lose = false;
+        win = false;
+        score = 0;
+        enemyKill = 0;
         
     }
     
@@ -79,15 +84,26 @@ public class Chap1_Ep1 extends GameState{
     @Override
     public void update() {
         
-        if(endGame) {
+        if(win) {
             long elapsed = (System.nanoTime() - Timer) / 1000000;
-            if(elapsed > 1000) {
+            if(elapsed > 600) {
+                gsm.setState(GameStateManager.LEVELCLEARSTATE);
+                gsm.setDmgDeal(player.getDmgDeal());
+                gsm.setDmgTaken(player.getDmgTaken());
+                gsm.setScore(score);
+                gsm.setEnemyKill(enemyKill);
+            }
+        }
+        
+        else if(lose) {
+            long elapsed = (System.nanoTime() - Timer) / 1000000;
+            if(elapsed > 400) {
                 gsm.setState(GameStateManager.GAMEOVERSTATE);
             }
         }
         
-        if(player.isDead() && !endGame) {
-            endGame = true;
+        if(player.isDead() && !lose) {
+            lose = true;
             Timer = System.nanoTime();
         }
         
@@ -106,12 +122,19 @@ public class Chap1_Ep1 extends GameState{
             Enemy e = enemies.get(i);
             e.update(player);
             if(e.isDead()) {
-                if(e.getType() == Enemy.BOSS && !endGame) {
-                    endGame = true;
+                if(e.getType() == Enemy.BOSS && !win) {
+                    win = true;
                     Timer = System.nanoTime();
                 }
                 enemies.remove(i);
                 i--;
+                enemyKill ++;
+                if(e.getType() == Enemy.BOSS) {
+                    score += 2000;
+                }
+                else {
+                    score += 300;
+                }
             }
         }
         

@@ -6,6 +6,7 @@
 package Entity;
 
 import atcsn.GamePanel;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -68,6 +69,15 @@ public class HUD {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void drawDMG(Graphics2D g, MapObject object, int damage, Color color) {
+        
+        Font DMGFont = new Font("Tahoma", Font.PLAIN, 14);
+        g.setFont(DMGFont);
+        g.setColor(color);
+        g.drawString(damage + "", (int)object.getX(), (int)object.getY());
+        
     }
     
     public void draw(Graphics2D g, ArrayList<Enemy> enemies) {
