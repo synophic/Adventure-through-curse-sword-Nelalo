@@ -8,6 +8,7 @@ package GameState;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.*;
 //import org.newdawn.slick.Music;
@@ -19,6 +20,9 @@ import javax.sound.sampled.*;
  */
 public class AudioPlayer {
 
+    //getMusic("ep1").start();
+    //getMusic("ep1").stop();
+    //getMusic("ep1").loop(Clip.LOOP_CONTINUOUSLY);
     private static final String[] SFX = {
         "dead",
         "hit",
@@ -29,12 +33,12 @@ public class AudioPlayer {
     };
 
     private static final String[] SFXFile = {
-        "Sound/dead.wav",
-        "Sound/hit.wav",
-        "Sound/jump.wav",
-        "Sound/slash1.wav",
-        "Sound/slash2.wav",
-        "Sound/slash3.wav"
+        "src/Sound/SFX/dead.wav",
+        "src/Sound/SFX/hit.wav",
+        "src/Sound/SFX/jump.wav",
+        "src/Sound/SFX/slash1.wav",
+        "src/Sound/SFX/slash2.wav",
+        "src/Sound/SFX/slash3.wav"
     };
 
     private static final String[] BGM = {
@@ -43,9 +47,9 @@ public class AudioPlayer {
         "gameOver",};
 
     private static final String[] BGMFile = {
-        "Sound/menu.wav",
-        "Sound/ep1.wav",
-        "Sound/gameOver.wav",};
+        "src/Sound/BGM/menu.wav",
+        "src/Sound/BGM/ep1.wav",
+        "src/Sound/BGM/gameOver.wav",};
 
     public static Map<String, Clip> soundMap = new HashMap<String, Clip>();
     public static Map<String, Clip> musicMap = new HashMap<String, Clip>();
@@ -53,14 +57,14 @@ public class AudioPlayer {
     public static void load() {
         for (int i = 0; i < SFXFile.length; i++) {
             try {
-                soundMap.put(SFX[i], loadSound(SFXFile[i]));
+                soundMap.put(SFX[i], loadSound(SFXFile[i], -6f));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         for (int i = 0; i < BGMFile.length; i++) {
             try {
-                musicMap.put(BGM[i], new Music(BGMFile[i]));
+                musicMap.put(BGM[i], loadSound(BGMFile[i], -4f));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -89,6 +93,36 @@ public class AudioPlayer {
             Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static void playMusic(String key) {
+        musicMap.get(key).setFramePosition(0);
+        musicMap.get(key).start();
+    }
+
+    public static void stopMusic(String key) {
+        musicMap.get(key).stop();
+    }
+
+    public static void playSound(String key) {
+        soundMap.get(key).setFramePosition(0);
+        soundMap.get(key).start();
+    }
+
+    public static void stopSound(String key) {
+        soundMap.get(key).stop();
+    }
+
+    public static void stopAllMusic() {
+        for (String key : musicMap.keySet()) {
+            stopMusic(key);
+        }
+    }
+
+    public static void stopAllSound() {
+        for (String key : musicMap.keySet()) {
+            stopSound(key);
+        }
     }
 
 }

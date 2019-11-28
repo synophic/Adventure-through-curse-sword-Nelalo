@@ -10,31 +10,30 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import javax.sound.sampled.Clip;
 
 /**
  *
  * @author synophic
  */
-public class GameOverState extends GameState{
-    
+public class GameOverState extends GameState {
+
     private Background bg;
 
     public GameOverState(GameStateManager gsm) {
         this.gsm = gsm;
-        
+
         try {
-            bg = new Background("/background/gameOver.png",1);
+            bg = new Background("/background/gameOver.png", 1);
             bg.setVector(0, 0);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
 
     @Override
     public void init() {
-        
+        AudioPlayer.playMusic("gameOver");
     }
 
     @Override
@@ -46,7 +45,7 @@ public class GameOverState extends GameState{
     public void draw(Graphics2D g) {
         //draw bg
         bg.draw(g);
-        Font font = new Font("Arial",Font.PLAIN,10);
+        Font font = new Font("Arial", Font.PLAIN, 10);
         g.setFont(font);
         g.setColor(Color.RED);
         g.drawString("Main menu", 175, 238);
@@ -54,7 +53,8 @@ public class GameOverState extends GameState{
 
     @Override
     public void keyPressed(int k) {
-        if(k == KeyEvent.VK_ENTER) {
+        AudioPlayer.stopAllMusic();
+        if (k == KeyEvent.VK_ENTER) {
             gsm.setInit(GameStateManager.CH1_EP1STATE);
             gsm.setState(GameStateManager.MENUSTATE);
         }
@@ -62,7 +62,7 @@ public class GameOverState extends GameState{
 
     @Override
     public void keyReleased(int k) {
-        
+
     }
-    
+
 }

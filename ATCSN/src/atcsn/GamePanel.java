@@ -1,42 +1,43 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package atcsn;
 
+import GameState.AudioPlayer;
 import GameState.GameStateManager;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-
 /**
  *
  * @author synophic
  */
-public class GamePanel extends JPanel implements Runnable, KeyListener{
-    
+public class GamePanel extends JPanel implements Runnable, KeyListener {
+
     //dimensions
     public static final int WIDTH = 400;
     public static final int HEIGHT = 300;
     public static final int SCALE = 3;
-    
+
     //game thread
     private Thread thread;
     private boolean running;
     private int FPS = 60;
-    private long targetTime = 1000/FPS;
-    
+    private long targetTime = 1000 / FPS;
+
     //image
     private BufferedImage image;
     private Graphics2D g;
-    
+
     //game state manager
     private GameStateManager gsm;
-    
+
     public GamePanel() {
         super();
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -45,68 +46,67 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
         setFocusable(true);
         requestFocus();
     }
-    
+
     @Override
     public void addNotify() {
         super.addNotify();
-        if(thread == null) {
+        if (thread == null) {
             thread = new Thread(this);
             addKeyListener(this);
             thread.start();
         }
     }
-    
+
     public void init() {
-        
+
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) image.getGraphics();
         running = true;
-        
+
         gsm = new GameStateManager();
-        
+        AudioPlayer.load();
     }
 
     @Override
     public void run() {
-        
+
         init();
-        
+
         long start;
         long elapsed;
         long wait;
-        
-        
+
         //game loop
-        while(running) {
-            
+        while (running) {
+
             start = System.nanoTime();
-            
+
             update();
             draw();
             drawToScreen();
-            
+
             elapsed = System.nanoTime() - start;
-            
+
             wait = targetTime - elapsed / 1000000;
-            
+
             try {
                 Thread.sleep(wait);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         }
-        
+
     }
-    
+
     public void update() {
         gsm.update();
     }
-    
+
     public void draw() {
         gsm.draw(g);
     }
-    
+
     public void drawToScreen() {
         Graphics g2 = getGraphics();
         g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
@@ -115,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
 
     @Override
     public void keyTyped(KeyEvent key) {
-        
+
     }
 
     @Override
@@ -127,6 +127,5 @@ public class GamePanel extends JPanel implements Runnable, KeyListener{
     public void keyReleased(KeyEvent key) {
         gsm.keyReleased(key.getKeyCode());
     }
-    
-    
+
 }
