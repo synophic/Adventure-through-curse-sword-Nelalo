@@ -32,6 +32,7 @@ public class GameStateManager {
     public static final int CH1_EP2STATE = 5;
     public static final int LEVELCLEARSTATE = 6;
     public static final int GAMEOVERSTATE = 7;
+    public static final int CREDIT = 8;
 
     public GameStateManager() {
         
@@ -46,6 +47,7 @@ public class GameStateManager {
         gameStates.add(new Chap1_Ep2(this));
         gameStates.add(new levelClear(this));
         gameStates.add(new GameOverState(this));
+        gameStates.add(new Credit(this));
         
     }
 
