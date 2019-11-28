@@ -20,21 +20,30 @@ public class Credit extends GameState {
     private Background bg;
 
     private int currentChoice = 0;
+    private String madeby = "Made By";
+    private String[] name = {
+        "นายพร้อมภพ เขียวสด 6107012",
+        "นายยิ่งธรรม ปรีชาชาญ 61070178",
+        "นายศุภสัณห์ ศิลาโรจน์ 61070227",
+        "นายสรวิศ แย้มคํา 61070234",
+        "นายอานนท์ อุ่นทน 61070268"
+    };
     private String[] options = {
         "Back"
     };
 
-    private Font font;
+    private Font font, font2;
 
     public Credit(GameStateManager gsm) {
 
         this.gsm = gsm;
 
         try {
-            bg = new Background("/background/credit.png", 1);
+            bg = new Background("/background/credit2.png", 1);
             bg.setVector(0, 0);
 
-            font = new Font("Arial", Font.PLAIN, 20);
+            font = new Font("Arial", Font.BOLD, 16);
+            font2 = new Font("Tahoma", Font.BOLD, 12);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +67,14 @@ public class Credit extends GameState {
 
         //draw bg
         bg.draw(g);
-
+        g.setFont(font);
+        g.setColor(Color.BLUE);
+        g.drawString(madeby, 168, 135);
+        g.setFont(font2);
+        for (int i = 0; i < name.length; i++) {
+            g.setColor(Color.BLACK);
+            g.drawString(name[i], 106, 178 + i * 15);
+        }
         //draw menu options
         for (int i = 0; i < options.length; i++) {
             if (i == currentChoice) {
