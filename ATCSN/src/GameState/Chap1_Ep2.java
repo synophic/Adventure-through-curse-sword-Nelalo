@@ -63,7 +63,7 @@ public class Chap1_Ep2 extends GameState{
         
         
         SlimeBoss slime = new SlimeBoss(tileMap);
-        slime.setPosition(100, 80);
+        slime.setPosition(500, 80);
         enemies.add(slime);
     }
 
