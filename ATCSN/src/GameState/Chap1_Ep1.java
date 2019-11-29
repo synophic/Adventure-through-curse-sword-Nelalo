@@ -55,7 +55,22 @@ public class Chap1_Ep1 extends GameState {
 
     @Override
     public void init() {
-        AudioPlayer.stopAllMusic();
+        tileMap = new TileMap(32);
+        tileMap.loadTiles("/Sprite/forestTile.png");
+        tileMap.loadMap("/source/lv1_1.map");
+        tileMap.setPosition(0, 0);
+
+        bg = new Background("/background/nightForest.png", 0.1);
+        player = new Player(tileMap);
+        player.setPosition(100, 200);
+
+        populateEnemies();
+
+        hud = new HUD(player);
+        lose = false;
+        win = false;
+        score = 0;
+        enemyKill = 0;
         AudioPlayer.playMusic("ep1");
     }
 
