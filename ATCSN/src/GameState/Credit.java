@@ -19,6 +19,10 @@ import java.util.Random;
 public class Credit extends GameState {
 
     private Background bg;
+    private long colorTimer;
+    private float red;
+    private float green;
+    private float blue;
 
     private int currentChoice = 0;
     private String[] name = {
@@ -69,12 +73,22 @@ public class Credit extends GameState {
 
     @Override
     public void init() {
-
+        colorTimer = System.nanoTime();
+        red = new Random().nextFloat();
+        green = new Random().nextFloat();
+        blue = new Random().nextFloat();
     }
 
     @Override
     public void update() {
         bg.update();
+        long elapsed = (System.nanoTime() - colorTimer) / 1000000;
+        if(elapsed > 200) {
+            red = new Random().nextFloat();
+            green = new Random().nextFloat();
+            blue = new Random().nextFloat();
+            colorTimer = System.nanoTime();
+        }
     }
 
     @Override
@@ -89,7 +103,7 @@ public class Credit extends GameState {
         }
         g.setFont(font);
         for (int i = 0; i < role.length; i++) {
-            g.setColor(new Color(new Random().nextFloat(),new Random().nextFloat(),new Random().nextFloat()));
+            g.setColor(new Color(red,green,blue));
             g.drawString(role[i], 106, 85 + i * 37);
         }
 
