@@ -22,7 +22,7 @@ public class Credit extends GameState {
     private int currentChoice = 0;
     private String madeby = "Made By";
     private String[] name = {
-        "นายพร้อมภพ เขียวสด 6107012",
+        "นายพร้อมภพ เขียวสด 61070129",
         "นายยิ่งธรรม ปรีชาชาญ 61070178",
         "นายศุภสัณห์ ศิลาโรจน์ 61070227",
         "นายสรวิศ แย้มคํา 61070234",
@@ -54,7 +54,7 @@ public class Credit extends GameState {
 
     @Override
     public void init() {
-
+        
     }
 
     @Override

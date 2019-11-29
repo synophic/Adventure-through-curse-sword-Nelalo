@@ -46,7 +46,6 @@ public class MenuState extends GameState {
 
     @Override
     public void init() {
-        AudioPlayer.stopAllMusic();
         AudioPlayer.playMusic("menu");
     }
 
