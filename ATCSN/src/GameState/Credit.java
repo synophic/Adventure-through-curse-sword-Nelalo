@@ -20,9 +20,9 @@ public class Credit extends GameState {
 
     private Background bg;
     private long colorTimer;
-    private float red;
-    private float green;
-    private float blue;
+    private float[] red = {0, 0, 0, 0, 0};
+    private float[] green = {0, 0, 0, 0, 0};
+    private float[] blue = {0, 0, 0, 0, 0};
 
     private int currentChoice = 0;
     private String[] name = {
@@ -74,19 +74,31 @@ public class Credit extends GameState {
     @Override
     public void init() {
         colorTimer = System.nanoTime();
-        red = new Random().nextFloat();
-        green = new Random().nextFloat();
-        blue = new Random().nextFloat();
+        for (int i = 0; i < red.length; i++) {
+            red[i] = new Random().nextFloat();
+        }
+        for (int i = 0; i < green.length; i++) {
+            green[i] = new Random().nextFloat();
+        }
+        for (int i = 0; i < blue.length; i++) {
+            blue[i] = new Random().nextFloat();
+        }
     }
 
     @Override
     public void update() {
         bg.update();
         long elapsed = (System.nanoTime() - colorTimer) / 1000000;
-        if(elapsed > 200) {
-            red = new Random().nextFloat();
-            green = new Random().nextFloat();
-            blue = new Random().nextFloat();
+        if (elapsed > 150) {
+            for (int i = 0; i < red.length; i++) {
+                red[i] = new Random().nextFloat();
+            }
+            for (int i = 0; i < green.length; i++) {
+                green[i] = new Random().nextFloat();
+            }
+            for (int i = 0; i < blue.length; i++) {
+                blue[i] = new Random().nextFloat();
+            }
             colorTimer = System.nanoTime();
         }
     }
@@ -103,7 +115,7 @@ public class Credit extends GameState {
         }
         g.setFont(font);
         for (int i = 0; i < role.length; i++) {
-            g.setColor(new Color(red,green,blue));
+            g.setColor(new Color(red[i], green[i], blue[i]));
             g.drawString(role[i], 106, 85 + i * 37);
         }
 
