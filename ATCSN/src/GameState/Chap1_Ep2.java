@@ -34,6 +34,22 @@ public class Chap1_Ep2 extends GameState {
 
     public Chap1_Ep2(GameStateManager gsm) {
         this.gsm = gsm;
+        tileMap = new TileMap(32);
+        tileMap.loadTiles("/Sprite/forestTile.png");
+        tileMap.loadMap("/source/lv1_2.map");
+        tileMap.setPosition(0, 0);
+
+        bg = new Background("/background/forest.png", 0.1);
+        player = new Player(tileMap);
+        player.setPosition(100, 100);
+
+        populateEnemies();
+
+        hud = new HUD(player);
+        lose = false;
+        win = false;
+        score = 0;
+        enemyKill = 0;
     }
 
     @Override
@@ -54,7 +70,7 @@ public class Chap1_Ep2 extends GameState {
         win = false;
         score = 0;
         enemyKill = 0;
-        AudioPlayer.playMusic("ep2");
+        AudioPlayer.playMusic("ep1");
     }
 
     private void populateEnemies() {

@@ -66,7 +66,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         gsm = new GameStateManager();
         AudioPlayer.load();
         
-        gsm.setState(0);
+        gsm.setState(6);
     }
 
     @Override
