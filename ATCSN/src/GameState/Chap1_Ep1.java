@@ -55,7 +55,6 @@ public class Chap1_Ep1 extends GameState {
 
     @Override
     public void init() {
-        AudioPlayer.stopAllMusic();
         AudioPlayer.playMusic("ep1");
     }
 
@@ -104,6 +103,7 @@ public class Chap1_Ep1 extends GameState {
         if (player.isDead() && !lose) {
             lose = true;
             Timer = System.nanoTime();
+            AudioPlayer.stopAllMusic();
         }
 
         //attack enemies

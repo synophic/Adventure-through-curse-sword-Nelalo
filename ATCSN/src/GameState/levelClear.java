@@ -85,7 +85,8 @@ public class levelClear extends GameState{
             gsm.setState(GameStateManager.MENUSTATE);
         }
         if(currentChoice == 1) {
-            System.exit(0);
+            //System.exit(0);
+            gsm.setState(GameStateManager.SELECT_CH1EP1);
         }
     }
 

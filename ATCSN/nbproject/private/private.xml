@@ -4,11 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/Tutorial.java</file>
+            <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/Chap1_Ep1.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/MenuState.java</file>
+            <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/GameOverState.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/GameStateManager.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/AudioPlayer.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/atcsn/GamePanel.java</file>
-            <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/background/title.png</file>
+            <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/Entity/Player.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/atcsn/ATCSN.java</file>
             <file>file:/E:/Workkmitl/Year2/Term1/OOP/GIT/Adventure-through-curse-sword-Nelalo/ATCSN/src/GameState/Credit.java</file>
         </group>

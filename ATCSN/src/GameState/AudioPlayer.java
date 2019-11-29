@@ -32,39 +32,42 @@ public class AudioPlayer {
         "slash3"
     };
 
-    private static final String[] SFXFile = {
-        "src/Sound/SFX/dead.wav",
-        "src/Sound/SFX/hit.wav",
-        "src/Sound/SFX/jump.wav",
-        "src/Sound/SFX/slash1.wav",
-        "src/Sound/SFX/slash2.wav",
-        "src/Sound/SFX/slash3.wav"
+    private static final Object[][] SFXFile = {
+        {"src/Sound/SFX/dead.wav", -4f},
+        {"src/Sound/SFX/hit.wav", -4f},
+        {"src/Sound/SFX/jump.wav", -15f},
+        {"src/Sound/SFX/slash1.wav", -4f},
+        {"src/Sound/SFX/slash2.wav", -4f},
+        {"src/Sound/SFX/slash3.wav", -4f}
     };
 
     private static final String[] BGM = {
         "menu",
         "ep1",
-        "gameOver",};
+        "gameOver"
+    };
 
-    private static final String[] BGMFile = {
-        "src/Sound/BGM/menu.wav",
-        "src/Sound/BGM/ep1.wav",
-        "src/Sound/BGM/gameOver.wav",};
+    private static final Object[][] BGMFile = {
+        {"src/Sound/BGM/menu.wav", -6f},
+        {"src/Sound/BGM/ep1.wav", -6f},
+        {"src/Sound/BGM/gameOver.wav", -6f}
+    };
 
     public static Map<String, Clip> soundMap = new HashMap<String, Clip>();
     public static Map<String, Clip> musicMap = new HashMap<String, Clip>();
 
+    // min[-80f <--> 6f]max  | [-30f <--> 0f] recomanded
     public static void load() {
         for (int i = 0; i < SFXFile.length; i++) {
             try {
-                soundMap.put(SFX[i], loadSound(SFXFile[i], -6f));
+                soundMap.put(SFX[i], loadSound((String) SFXFile[i][0], (Float) SFXFile[i][1]));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         for (int i = 0; i < BGMFile.length; i++) {
             try {
-                musicMap.put(BGM[i], loadSound(BGMFile[i], -4f));
+                musicMap.put(BGM[i], loadSound((String) BGMFile[i][0], (Float) BGMFile[i][1]));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,7 +100,7 @@ public class AudioPlayer {
 
     public static void playMusic(String key) {
         musicMap.get(key).setFramePosition(0);
-        musicMap.get(key).start();
+        musicMap.get(key).loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void stopMusic(String key) {
