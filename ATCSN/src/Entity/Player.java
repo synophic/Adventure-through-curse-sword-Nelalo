@@ -94,7 +94,7 @@ public class Player extends MapObject {
         hited = false;
 
         health = maxHealth = 150;
-        ATK = 5000;
+        ATK = 50;
         DEF = 40;
 
         combos1_Scale = 0.4;

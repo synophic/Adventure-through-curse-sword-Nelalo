@@ -44,13 +44,15 @@ public class AudioPlayer {
     private static final String[] BGM = {
         "menu",
         "ep1",
-        "gameOver"
+        "gameOver",
+        "wolfboss"
     };
 
     private static final Object[][] BGMFile = {
         {"src/Sound/BGM/menu.wav", -6f},
         {"src/Sound/BGM/ep1.wav", -6f},
-        {"src/Sound/BGM/gameOver.wav", -6f}
+        {"src/Sound/BGM/gameOver.wav", -6f},
+        {"src/Sound/BGM/wolfBoss.wav", -6f}
     };
 
     public static Map<String, Clip> soundMap = new HashMap<String, Clip>();
@@ -74,14 +76,6 @@ public class AudioPlayer {
         }
     }
 
-    public static Clip getMusic(String key) {
-        return musicMap.get(key);
-    }
-
-    public static Clip getSound(String key) {
-        return soundMap.get(key);
-    }
-
     public static Clip loadSound(String url, float gain) {
         try {
             File f = new File(url);
@@ -98,7 +92,16 @@ public class AudioPlayer {
         return null;
     }
 
+    public static Clip getMusic(String key) {
+        return musicMap.get(key);
+    }
+
+    public static Clip getSound(String key) {
+        return soundMap.get(key);
+    }
+
     public static void playMusic(String key) {
+        stopAllMusic();
         musicMap.get(key).setFramePosition(0);
         musicMap.get(key).loop(Clip.LOOP_CONTINUOUSLY);
     }

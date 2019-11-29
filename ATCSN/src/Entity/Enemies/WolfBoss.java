@@ -6,6 +6,7 @@
 package Entity.Enemies;
 
 import Entity.*;
+import GameState.AudioPlayer;
 import TileMap.TileMap;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -178,6 +179,8 @@ public class WolfBoss extends Enemy{
             if(x - 300 < p.getX()) {
                 waiting = false;
                 waitTimer = System.nanoTime();
+                AudioPlayer.stopAllMusic();
+                AudioPlayer.playMusic("wolfboss");
             }
         }
         
