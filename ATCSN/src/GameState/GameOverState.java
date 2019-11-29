@@ -53,7 +53,6 @@ public class GameOverState extends GameState {
 
     @Override
     public void keyPressed(int k) {
-        AudioPlayer.stopAllMusic();
         if (k == KeyEvent.VK_ENTER) {
             gsm.setInit(GameStateManager.CH1_EP1STATE);
             gsm.setState(GameStateManager.MENUSTATE);

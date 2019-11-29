@@ -29,7 +29,8 @@ public class AudioPlayer {
         "jump",
         "slash1",
         "slash2",
-        "slash3"
+        "slash3",
+        "changeChoice"
     };
 
     private static final Object[][] SFXFile = {
@@ -38,8 +39,7 @@ public class AudioPlayer {
         {"src/Sound/SFX/jump.wav", -15f},
         {"src/Sound/SFX/slash1.wav", -4f},
         {"src/Sound/SFX/slash2.wav", -4f},
-        {"src/Sound/SFX/slash3.wav", -4f}
-    };
+        {"src/Sound/SFX/slash3.wav", -4f},};
 
     private static final String[] BGM = {
         "menu",
@@ -102,7 +102,6 @@ public class AudioPlayer {
 
     public static void playMusic(String key) {
         stopAllMusic();
-        musicMap.get(key).setFramePosition(0);
         musicMap.get(key).loop(Clip.LOOP_CONTINUOUSLY);
     }
 
@@ -122,12 +121,15 @@ public class AudioPlayer {
     public static void stopAllMusic() {
         for (String key : musicMap.keySet()) {
             stopMusic(key);
+            System.out.println("key is: " + key);
         }
     }
 
     public static void stopAllSound() {
         for (String key : musicMap.keySet()) {
-            stopSound(key);
+            if (getSound(key).isRunning()) {
+                stopSound(key);
+            }
         }
     }
 

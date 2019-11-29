@@ -37,10 +37,10 @@ public class GameStateManager {
     public static final int CREDIT = 10;
 
     public GameStateManager() {
-
+        AudioPlayer.load();
         gameStates = new ArrayList<GameState>();
 
-        currentState = MENUSTATE;
+        //currentState = MENUSTATE;
         gameStates.add(new MenuState(this));
         gameStates.add(new Tutorial(this, "/background/howTo1.png", MENUSTATE, HOWTO2, 12, 150));
         gameStates.add(new Tutorial(this, "/background/howTo2.png", HOWTO1, HOWTO3, 10, 150));

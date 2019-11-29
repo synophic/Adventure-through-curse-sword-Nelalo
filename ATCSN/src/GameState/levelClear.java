@@ -45,6 +45,7 @@ public class levelClear extends GameState{
     public void init() {
         dataFont = new Font("Tahoma",Font.PLAIN,17);
         menuFont = new Font("Arial",Font.PLAIN,14);
+        AudioPlayer.playMusic("menu");
     }
 
     @Override

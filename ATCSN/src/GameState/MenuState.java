@@ -46,7 +46,8 @@ public class MenuState extends GameState {
 
     @Override
     public void init() {
-
+        AudioPlayer.stopAllMusic();
+        AudioPlayer.playMusic("menu");
     }
 
     @Override
@@ -56,7 +57,6 @@ public class MenuState extends GameState {
 
     @Override
     public void draw(Graphics2D g) {
-        AudioPlayer.getMusic("menu").loop(Clip.LOOP_CONTINUOUSLY);
         //draw bg
         bg.draw(g);
 
@@ -74,7 +74,6 @@ public class MenuState extends GameState {
     }
 
     private void select() {
-        AudioPlayer.stopAllMusic();
         if (currentChoice == 0) {
             gsm.setState(GameStateManager.CH1_EP1STATE);
         }
