@@ -123,7 +123,6 @@ public class AudioPlayer {
     public static void stopAllMusic() {
         for (String key : musicMap.keySet()) {
             stopMusic(key);
-            System.out.println("key is: " + key);
         }
     }
 

@@ -46,8 +46,8 @@ public class GameStateManager {
         gameStates.add(new Tutorial(this, "/background/howTo3.png", HOWTO2, MENUSTATE, 12, 150));
         gameStates.add(new Chap1_Ep1(this));
         gameStates.add(new Chap1_Ep2(this));
-        gameStates.add(new LevelSelect(this, "Chapter1 Ep1", "/background/thumb_ch1ep1.png", LEVELCLEARSTATE, CH1_EP1STATE, SELECT_CH1EP2, 7, 500));
-        gameStates.add(new LevelSelect(this, "Chapter1 Ep2", "/background/thumb_ch1ep2.png", SELECT_CH1EP1, CH1_EP2STATE, LEVELCLEARSTATE, 7, 500));
+        gameStates.add(new LevelSelect(this, "Chapter1 Ep1", "/background/thumb_ch1ep1.png", MENUSTATE, CH1_EP1STATE, SELECT_CH1EP2, 7, 500));
+        gameStates.add(new LevelSelect(this, "Chapter1 Ep2", "/background/thumb_ch1ep2.png", SELECT_CH1EP1, CH1_EP2STATE, MENUSTATE, 7, 500));
         gameStates.add(new levelClear(this));
         gameStates.add(new GameOverState(this));
         gameStates.add(new Credit(this));

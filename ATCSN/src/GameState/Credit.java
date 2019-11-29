@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  *
@@ -20,13 +21,27 @@ public class Credit extends GameState {
     private Background bg;
 
     private int currentChoice = 0;
-    private String madeby = "Made By";
     private String[] name = {
         "นายพร้อมภพ เขียวสด 61070129",
         "นายยิ่งธรรม ปรีชาชาญ 61070178",
         "นายศุภสัณห์ ศิลาโรจน์ 61070227",
         "นายสรวิศ แย้มคํา 61070234",
         "นายอานนท์ อุ่นทน 61070268"
+    };
+
+    private String[] name_eng = {
+        "Prompop Keawsod 61070129",
+        "Yingtham Preechachan 61070178",
+        "Suphasan Silarot 61070227",
+        "Soravit Yamkum 61070234",
+        "Arnon Unthon 61070268"
+    };
+    private String[] role = {
+        "Level Design",
+        "Character & art design",
+        "Programmer",
+        "Tester",
+        "Game Debugger & Optimizer"
     };
     private String[] options = {
         "Back"
@@ -39,11 +54,11 @@ public class Credit extends GameState {
         this.gsm = gsm;
 
         try {
-            bg = new Background("/background/credit2.png", 1);
+            bg = new Background("/background/newCredit.png", 1);
             bg.setVector(0, 0);
 
-            font = new Font("Arial", Font.BOLD, 16);
-            font2 = new Font("Tahoma", Font.BOLD, 12);
+            font = new Font("Tahoma", Font.BOLD, 14);
+            font2 = new Font("Tahoma", Font.BOLD, 12);//Arial Tahoma
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,7 +69,7 @@ public class Credit extends GameState {
 
     @Override
     public void init() {
-        
+
     }
 
     @Override
@@ -67,23 +82,20 @@ public class Credit extends GameState {
 
         //draw bg
         bg.draw(g);
-        g.setFont(font);
-        g.setColor(Color.BLUE);
-        g.drawString(madeby, 168, 135);
         g.setFont(font2);
-        for (int i = 0; i < name.length; i++) {
-            g.setColor(Color.BLACK);
-            g.drawString(name[i], 106, 178 + i * 15);
+        g.setColor(Color.white);
+        for (int i = 0; i < name_eng.length; i++) {
+            g.drawString(name_eng[i], 116, 100 + i * 37);
         }
-        //draw menu options
-        for (int i = 0; i < options.length; i++) {
-            if (i == currentChoice) {
-                g.setColor(Color.RED);
-            } else {
-                g.setColor(Color.DARK_GRAY);
-            }
-            g.drawString(options[i], 15 + i * 335, 257);
+        g.setFont(font);
+        for (int i = 0; i < role.length; i++) {
+            g.setColor(new Color(new Random().nextFloat(),new Random().nextFloat(),new Random().nextFloat()));
+            g.drawString(role[i], 106, 85 + i * 37);
         }
+
+        g.setFont(font);
+        g.setColor(Color.RED);
+        g.drawString(options[0], 182, 288);
 
     }
 
